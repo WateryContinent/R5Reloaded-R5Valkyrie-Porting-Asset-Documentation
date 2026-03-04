@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Simple Page</title>
+</head>
+<body>
+
+    <h1>Welcome</h1>
+    <p>This is a simple HTML page with buttons.</p>
+
+    <button onclick="sayHello()">Say Hello</button>
+    <button onclick="changeText()">Change Text</button>
+
+    <p id="message">Nothing has happened yet.</p>
+
+    <script>
+        function sayHello() {
+            alert("Hello!");
+        }
+
+        function changeText() {
+            document.getElementById("message").innerText = "The text has changed!";
+        }
+    </script>
+
+</body>
+</html>
