@@ -249,12 +249,12 @@
 <section id="tf1">
   <div class="section-label">02 — Pipeline A</div>
   <h2 style="color:var(--tf1)">TF1 → APEX</h2>
-  <p class="section-intro">Titanfall 1 ships with r1-era MDL/VVD/VTX files, technically close to Source Engine but with Respawn extensions. rmdlconv handles the heavy lifting.</p>
+  <p class="section-intro">Titanfall 1 ships with source-style MDL/VVD/VTX files, these have the same extenstion as regular source but they have been modified by respawn. rmdlconv handles the heavy lifting in getting the models in the correct format and ready to use.</p>
 
   <div class="steps-container">
     <nav class="steps-nav">
       <a href="#tf1-s1" class="step-nav-item active"><span class="step-num">01</span>Extract Assets</a>
-      <a href="#tf1-s2" class="step-nav-item"><span class="step-num">02</span>Analyze Format</a>
+      <a href="#tf1-s2" class="step-nav-item"><span class="step-num">02</span>Collect Assets</a>
       <a href="#tf1-s3" class="step-nav-item"><span class="step-num">03</span>Run rmdlconv</a>
       <a href="#tf1-s4" class="step-nav-item"><span class="step-num">04</span>Material Paths</a>
       <a href="#tf1-s5" class="step-nav-item"><span class="step-num">05</span>PHY Physics</a>
@@ -265,21 +265,13 @@
       <div class="step-block fade-in" id="tf1-s1">
         <div class="step-block-header"><div class="step-index">01</div><h3>EXTRACT ASSETS FROM TF1</h3></div>
         <div class="prose">
-          <p>TF1 model assets live inside <code>.vpk</code> archives. Use <strong>RSX (reSource Xtractor)</strong> or <code>vpk.exe</code> from the Titanfall install to extract model bundles.</p>
+          <p>All TF1 assets live inside <code>.vpk</code> archives, generally within the common vpk. Use <strong>ReVPK.exe</strong> (located within the <strong>bin</strong> folder of the game installation), <strong>Titanfall VPK Tool</strong> or  <strong>ReVPKEdit</strong>  to extract your desired assets from the Titanfall install to extract model bundles.</p>
           <div class="code-block">
             <div class="code-header"><span class="code-lang">Shell</span><button class="code-copy" onclick="copyCode(this)">COPY</button></div>
-            <pre><span class="c-comment"># List contents of a model VPK</span>
-<span class="c-keyword">rsx</span> <span class="c-flag">--list</span> <span class="c-path">englishclient_mp_common.bsp.pak000.vpk</span>
-
-<span class="c-comment"># Extract all models to output directory</span>
-<span class="c-keyword">rsx</span> <span class="c-flag">--extract</span> <span class="c-flag">--filter</span> <span class="c-string">"*.mdl"</span> <span class="c-path">englishclient_mp_common.bsp.pak000.vpk</span> \
-    <span class="c-flag">--output</span> <span class="c-path">./extracted/tf1/models/</span>
-
-<span class="c-comment"># Grab paired VVD + VTX + PHY alongside the MDL</span>
-<span class="c-keyword">rsx</span> <span class="c-flag">--extract</span> <span class="c-flag">--filter</span> <span class="c-string">"models/weapons/r101*"</span> <span class="c-path">...</span></pre>
-          </div>
-          <div class="info-box tip"><span class="info-label">Tip</span>RSX on macOS requires the CMake build with Cocoa windowing. Run headless with <code>--no-gui</code> for batch extraction.</div>
-          <p>You need all four sibling files: <code>.mdl</code> (header + bones + surfaces), <code>.vvd</code> (vertex data), <code>.vtx</code> (mesh strips + LODs), and optionally <code>.phy</code> for collision.</p>
+            <pre><span class="c-comment"># Using ReVPK, this dumps the entire vpk.</span>
+<span class="c-keyword">revpk.exe</span> <span class="c-flag">-unpack</span> <span class="c-path">englishclient_mp_common.bsp.pak000_dir.vpk</span> <span class="c-path">./extracted/</span></div>
+          <div class="info-box tip"><span class="info-label">Note</span>Both ReVPKEdit and the Titanfall VPK Tool are GUI tool which allows you to extract specific assets from the VPKs.</div>
+          <p>You need all four sibling files: <code>.mdl</code> (header + bones + surfaces), <code>.vvd</code> (vertex data), <code>.vtx</code> (mesh strips + LODs), and optionally <code>.phy</code> for collision. rmdlconv currently has issues with Titanfall 1 and Titanfall 2 <code>.phy</code> conversion, I have resolved this but it has not released it yet due to other issues.</p>
         </div>
       </div>
 
