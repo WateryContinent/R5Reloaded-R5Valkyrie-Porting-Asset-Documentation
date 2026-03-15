@@ -190,7 +190,7 @@
       <div class="card-arrow">↓</div>
       <div class="card-dest">Target → Apex Legends</div>
       <div class="card-title">TF1 → APEX</div>
-      <div class="card-desc">TF1 uses the r1 model format (MDL/VVD/VTX) — a modified Valve Source format. Requires rmdlconv for skeleton remapping and material path conversion to Apex's r5 RMDL.</div>
+      <div class="card-desc">TF1 uses the R1 model format (MDL/VVD/VTX) v52 — a modified Valve Source format.</div>
       <div class="tag-list">
         <span class="tag active">.mdl</span><span class="tag active">.vvd</span><span class="tag active">.vtx</span><span class="tag active">.phy</span><span class="tag">rmdlconv</span><span class="tag">RePak</span>
       </div>
@@ -201,9 +201,9 @@
       <div class="card-arrow">↓</div>
       <div class="card-dest">Target → Apex Legends</div>
       <div class="card-title">TF2 → APEX</div>
-      <div class="card-desc">TF2 uses r2 RMDL — the closest format relative to Apex's r5. Header, bone flags, and LOD counts differ but this is the most direct conversion path with the best fidelity.</div>
+      <div class="card-desc">TF2 uses R2 model format (MDL/VVD/VTX) v53 — a modified Valve Source format, this is more similar to Apexs RMDL v10 (Subversion v54).</div>
       <div class="tag-list">
-        <span class="tag active">.rmdl</span><span class="tag active">.rseq</span><span class="tag active">.rpak</span><span class="tag">rmdlconv</span><span class="tag">RePak</span>
+        <span class="tag active">.mdl</span><span class="tag active">.phy</span><span class="tag">rmdlconv</span><span class="tag">RePak</span>
       </div>
     </div>
     <div class="pipeline-card" style="--card-color:var(--src)">
@@ -212,29 +212,39 @@
       <div class="card-arrow">↓</div>
       <div class="card-dest">Target → Apex Legends</div>
       <div class="card-title">SOURCE → APEX</div>
-      <div class="card-desc">HL2, Portal, CS:S, L4D, TF2 (game), etc. Standard MDL/VVD/VTX. Longest pipeline — needs intermediate FBX export, skeleton retargeting, and full material rebuild.</div>
+      <div class="card-desc">HL2, Portal/Portal 2, CS:S, L4D, Team Fortress 2, etc. Standard MDL/VVD/VTX/PHY, Version depends on the game. Semi-Long pipeline — needs conversion, skeleton retargeting (Depending on the Game), and potential partial material rebuild.</div>
       <div class="tag-list">
         <span class="tag active">.mdl</span><span class="tag">Crowbar</span><span class="tag">Blender</span><span class="tag">rmdlconv</span><span class="tag">RePak</span>
       </div>
     </div>
+        <div class="pipeline-card" style="--card-color:#2ecc71">
+      <div class="card-source">Other Games</div>
+      <div style="font-family:'Bebas Neue';font-size:20px;color:var(--card-color);letter-spacing:2px">Other Games/Model Formats</div>
+      <div class="card-arrow">↓</div>
+      <div class="card-dest">Target → Blender → Apex Legends</div>
+      <div class="card-title">BLENDER → APEX</div>
+      <div class="card-desc">Other Game Model format like FBX, OBJ etc. Longest pipeline — possible skeleton retargeting, and full material rebuild.</div>
+      <div class="tag-list">
+        <span class="tag active">.OBJ</span><span class="tag active">.FBX</span><span class="tag active">.SEMODEL</span><span class="tag">Crowbar</span><span class="tag">Blender</span><span class="tag">rmdlconv</span><span class="tag">RePak</span>
+      </div>
+    </div>
   </div>
 
-  <h3 style="font-family:'Bebas Neue';font-size:26px;color:var(--text-bright);letter-spacing:1px;margin-bottom:20px;">FORMAT COMPATIBILITY MATRIX</h3>
+  <h3 style="font-family:'Bebas Neue';font-size:26px;color:var(--text-bright);letter-spacing:1px;margin-bottom:20px;">FORMAT COMPATIBILITY</h3>
   <div style="overflow-x:auto;">
   <table class="format-table fade-in">
     <thead>
-      <tr><th>Feature</th><th>TF1 r1</th><th>TF2 r2</th><th>Source (Valve)</th><th>Apex r5 (Target)</th></tr>
+      <tr><th>Feature</th><th>Titanfall 1</th><th>Titanfall 2</th><th>Source (Valve)</th><th>Blender</th><th>Apex Legends R5V/R5R (Target)</th></tr>
     </thead>
     <tbody>
-      <tr><td>Model Format</td><td>MDL/VVD/VTX</td><td>RMDL</td><td>MDL/VVD/VTX</td><td>RMDL</td></tr>
-      <tr><td>Skeleton System</td><td><span class="badge badge-warn">Partial Match</span></td><td><span class="badge badge-ok">Direct</span></td><td><span class="badge badge-bad">Requires Remap</span></td><td>r5 bones</td></tr>
-      <tr><td>Physics (PHY)</td><td><span class="badge badge-warn">Needs Convert</span></td><td><span class="badge badge-ok">Compatible</span></td><td><span class="badge badge-warn">Needs Convert</span></td><td>phys format</td></tr>
-      <tr><td>Material Paths</td><td><span class="badge badge-warn">Repath</span></td><td><span class="badge badge-warn">Repath</span></td><td><span class="badge badge-bad">Full Rebuild</span></td><td>.rpak mats</td></tr>
-      <tr><td>Animations (RSEQ)</td><td><span class="badge badge-bad">VCD → RSEQ</span></td><td><span class="badge badge-ok">Direct Port</span></td><td><span class="badge badge-bad">Not Supported</span></td><td>RSEQ</td></tr>
-      <tr><td>LOD Count</td><td>8 max</td><td>7 max</td><td>8 max</td><td>5 (target 3–5)</td></tr>
+      <tr><td>Model Format</td><td>MDL/VVD/VTX</td><td>MDL/VVD/VTX</td><td>MDL/VVD/VTX</td><td>SMD</td><td>RMDL</td></tr>
+      <tr><td>Skeleton System</td><td><span class="badge badge-ok">Direct Conversion</span></td><td><span class="badge badge-ok">Direct Conversion</span></td><td><span class="badge badge-bad">Requires Remap*</span></td><td><span class="badge badge-bad">Requires Remap*</span></td><td><span class="badge badge-ok">Direct</span></td></tr>
+      <tr><td>Physics (PHY)</td><td><span class="badge badge-warn">Needs Conversion</span></td><td><span class="badge badge-warn">Needs Conversion</span></td><td><span class="badge badge-warn">Needs Conversion</span></td><td><span class="badge badge-bad">NO PATH</span></td><td><span class="badge badge-ok">Direct</span></td></tr>
+      <tr><td>Material Paths</td><td><span class="badge badge-ok">Direct Conversion</span></td><td><span class="badge badge-ok">Direct Conversion</span></td><td><span class="badge badge-bad">Partial Rebuild</span></td><td><span class="badge badge-warn">Slight Tweak</span></td><td><span class="badge badge-ok">Direct</span></td></tr>
+      <tr><td>Animations (RSEQ)</td><td><span class="badge badge-bad">VCD → RSEQ</span></td><td><span class="badge badge-ok">Direct Port</span></td><td><span class="badge badge-bad">Needs Conversion</span></td><td><span class="badge badge-bad">Needs Conversion</span></td><td><span class="badge badge-ok">Direct</span></td></tr>
     </tbody>
   </table>
-  </div>
+  <div class="info-box tip"><span class="info-label">Note</span>Anything with * next to do it means it really depends on what you want to do with the model, if its a weapon from GMOD and you want it to be used with Apex Legends Character Models, then it will require remapping of the skeleton, if you're going to use a GMOD gun with a GMOD character model, then you can save time and not remap it however it wont work with apex models but will work and look fine with the GMOD Model</div>
 </section>
 
 <div class="divider"></div>
@@ -244,7 +254,6 @@
   <div class="section-label">02 — Pipeline A</div>
   <h2 style="color:var(--tf1)">TF1 → APEX</h2>
   <p class="section-intro">Titanfall 1 ships with source-style MDL/VVD/VTX files, these have the same extenstion as regular source but they have been modified by respawn. rmdlconv handles the heavy lifting in getting the models in the correct format and ready to use.</p>
-
   <div class="steps-container">
     <nav class="steps-nav">
       <a href="#tf1-s1" class="step-nav-item active"><span class="step-num">01</span>Extract Assets</a>
