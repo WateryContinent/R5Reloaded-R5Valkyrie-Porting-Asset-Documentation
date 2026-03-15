@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>APEX MODEL PORTING — Complete Guide</title>
+<title>Asset Guide - R5V/R5R</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=Share+Tech+Mono&family=Bebas+Neue&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
 <style>
@@ -157,6 +157,7 @@
     <li><a href="#tf1">TF1 → Apex</a></li>
     <li><a href="#tf2">TF2 → Apex</a></li>
     <li><a href="#source">Source → Apex</a></li>
+    <li><a href="#blender">Blender → Apex</a></li>
     <li><a href="#tools">Tools</a></li>
     <li><a href="#troubleshoot">Troubleshoot</a></li>
   </ul>
@@ -174,6 +175,7 @@
     <a href="#tf1" class="btn btn-primary">Titanfall 1</a>
     <a href="#tf2" class="btn btn-primary">Titanfall 2</a>
     <a href="#source" class="btn btn-primary">Source Engine</a>
+    <a href="#blender" class="btn btn-primary">Other Engines</a>
   </div>
 </header>
 
@@ -256,11 +258,11 @@
   <p class="section-intro">Titanfall 1 ships with source-style MDL/VVD/VTX files, these have the same extenstion as regular source but they have been modified by respawn. rmdlconv handles the heavy lifting in getting the models in the correct format and ready to use.</p>
   <div class="steps-container">
     <nav class="steps-nav">
-      <a href="#tf1-s1" class="step-nav-item active"><span class="step-num">01</span>Extract Assets</a>
-      <a href="#tf1-s2" class="step-nav-item"><span class="step-num">02</span>Collect Assets</a>
-      <a href="#tf1-s3" class="step-nav-item"><span class="step-num">03</span>Run rmdlconv</a>
+      <a href="#tf1-s1" class="step-nav-item active"><span class="step-num">01</span>Extracting Assets</a>
+      <a href="#tf1-s2" class="step-nav-item"><span class="step-num">02</span>Convert Model</a>
+      <a href="#tf1-s3" class="step-nav-item"><span class="step-num">03</span>Convert Animations</a>
       <a href="#tf1-s4" class="step-nav-item"><span class="step-num">04</span>Material Paths</a>
-      <a href="#tf1-s5" class="step-nav-item"><span class="step-num">05</span>PHY Physics</a>
+      <a href="#tf1-s5" class="step-nav-item"><span class="step-num">05</span>PHY Physics (Optinal)</a>
       <a href="#tf1-s6" class="step-nav-item"><span class="step-num">06</span>Pack with RePak</a>
     </nav>
     <div class="steps-content">
@@ -279,7 +281,7 @@
       </div>
 
       <div class="step-block fade-in" id="tf1-s2">
-        <div class="step-block-header"><div class="step-index">02</div><h3>ANALYZE THE r1 FORMAT</h3></div>
+        <div class="step-block-header"><div class="step-index">02</div><h3>CONVERT MODEL</h3></div>
         <div class="prose">
           <p>TF1 MDLs carry a <strong>studiohdr version field</strong> — r1 files report version <code>53</code>, whereas Apex r5 expects <code>54</code> with an extended header.</p>
           <div class="code-block">
@@ -290,7 +292,7 @@
     magic   = f.read(<span class="c-num">4</span>)          <span class="c-comment"># b"IDST"</span>
     version = struct.unpack(<span class="c-string">"&lt;I"</span>, f.read(<span class="c-num">4</span>))[<span class="c-num">0</span>]
     print(<span class="c-string">f"Magic: {magic}, Version: {version}"</span>)
-    <span class="c-comment"># r1 TF1 = 53 | r2 TF2 = 54 | r5 Apex = 54 (ext. header)</span></pre>
+    <span class="c-comment"># R1 TF1 = 53 | R2 TF2 = 54 | R5 Apex = 54 (ext. header)</span></pre>
           </div>
           <div style="overflow-x:auto;">
           <table class="format-table">
@@ -307,7 +309,7 @@
       </div>
 
       <div class="step-block fade-in" id="tf1-s3">
-        <div class="step-block-header"><div class="step-index">03</div><h3>RUN rmdlconv</h3></div>
+        <div class="step-block-header"><div class="step-index">03</div><h3>Convert Animations</h3></div>
         <div class="prose">
           <p><strong>rmdlconv</strong> reads r1 MDL/VVD/VTX and emits r5-compatible RMDL. Use the latest build — PHY and VVD size field fixes are critical for crash-free loading.</p>
           <div class="code-block">
@@ -322,8 +324,6 @@
           <span class="c-flag">-o</span>     <span class="c-path">./output/r5/models/</span> \
           <span class="c-flag">--from</span> r1 <span class="c-flag">--to</span> r5 <span class="c-flag">--verbose</span></pre>
           </div>
-          <div class="info-box warn"><span class="info-label">Warning</span>The VVD size field bug caused crashes with certain TF1 weapons. Ensure rmdlconv correctly writes <code>vertexDataSize</code> — it must equal <code>numVertices × sizeof(mstudiovertex_t)</code> for the <strong>target</strong> format, not the source.</div>
-          <p>For characters, use the <code>--bonemap</code> flag with a JSON remap file to patch skeleton differences between TF1 ValveBiped and Apex r5 bones.</p>
           <div class="code-block">
             <div class="code-header"><span class="code-lang">JSON — bone remap</span><button class="code-copy" onclick="copyCode(this)">COPY</button></div>
             <pre">{
@@ -337,7 +337,7 @@
       </div>
 
       <div class="step-block fade-in" id="tf1-s4">
-        <div class="step-block-header"><div class="step-index">04</div><h3>MATERIAL PATH CONVERSION</h3></div>
+        <div class="step-block-header"><div class="step-index">04</div><h3>Material</h3></div>
         <div class="prose">
           <p>TF1 MDLs reference materials as <code>materials/models/weapons/...</code> VMT paths. Apex uses an internal RPAK material asset system — all surface references need repathing.</p>
           <div class="code-block">
@@ -660,6 +660,133 @@ OUT_DIR = <span class="c-string">"/path/to/fbx_out/"</span>
 </section>
 
 <div class="divider"></div>
+
+<!-- BLENDER → APEX -->
+<section id="blender">
+  <div class="section-label">05 — Pipeline D</div>
+  <h2 style="--card-color:#2ecc71">Blender → APEX</h2>
+  <p class="section-intro">Other Game Model format like FBX, OBJ etc. Longest pipeline — possible skeleton retargeting, and full material rebuild.</p>
+
+  <div class="steps-container">
+    <nav class="steps-nav">
+      <a href="#src-b1" class="step-nav-item active"><span class="step-num">01</span>Export Model</a>
+      <a href="#src-b2" class="step-nav-item"><span class="step-num">02</span>FBX Export</a>
+      <a href="#src-b3" class="step-nav-item"><span class="step-num">03</span>Skeleton Retarget</a>
+      <a href="#src-b4" class="step-nav-item"><span class="step-num">04</span>Material Rebuild</a>
+      <a href="#src-b5" class="step-nav-item"><span class="step-num">05</span>Compile + Pack</a>
+    </nav>
+    <div class="steps-content">
+
+      <div class="step-block fade-in" id="src-b1">
+        <div class="step-block-header"><div class="step-index">01</div><h3>EXPORTING MODELS FROM OTHER GAMES</h3></div>
+        <div class="prose">
+          <p>Standard Source MDLs can't be fed directly into rmdlconv. Use <strong>Crowbar</strong> or <strong>mdldecompiler</strong> to extract SMD/QC source files first.</p>
+          <div class="code-block">
+            <div class="code-header"><span class="code-lang">Shell — Crowbar CLI</span><button class="code-copy" onclick="copyCode(this)">COPY</button></div>
+            <pre><span class="c-keyword">CrowbarCommandLineApp</span> \
+    <span class="c-flag">-p</span> <span class="c-path">./source_game/models/props/barrel.mdl</span> \
+    <span class="c-flag">-o</span> <span class="c-path">./decompiled/barrel/</span>
+<span class="c-comment"># Produces: barrel.qc, barrel_reference.smd, barrel_phys.smd</span></pre>
+          </div>
+          <div class="info-box warn"><span class="info-label">Rig Complexity</span>Character rigs from standard Source (HL2 NPCs, TF2 characters) use ValveBiped which differs substantially from Apex's skeleton. Props and weapons are much easier — many have minimal bones or are effectively static meshes.</div>
+        </div>
+      </div>
+
+      <div class="step-block fade-in" id="src-b2">
+        <div class="step-block-header"><div class="step-index">02</div><h3>BLENDER FBX EXPORT</h3></div>
+        <div class="prose">
+          <p>Import the SMD into Blender via <strong>Blender Source Tools</strong>, inspect the mesh and rig, then export as FBX for rmdlconv ingestion.</p>
+          <div class="code-block">
+            <div class="code-header"><span class="code-lang">Python — Blender batch SMD→FBX</span><button class="code-copy" onclick="copyCode(this)">COPY</button></div>
+            <pre><span class="c-keyword">import</span> bpy, os
+
+SMD_DIR = <span class="c-string">"/path/to/decompiled/"</span>
+OUT_DIR = <span class="c-string">"/path/to/fbx_out/"</span>
+
+<span class="c-keyword">for</span> f <span class="c-keyword">in</span> os.listdir(SMD_DIR):
+    <span class="c-keyword">if not</span> f.endswith(<span class="c-string">".smd"</span>): <span class="c-keyword">continue</span>
+    bpy.ops.wm.read_factory_settings(use_empty=<span class="c-keyword">True</span>)
+    bpy.ops.import_scene.smd(
+        filepath=os.path.join(SMD_DIR, f))
+    out = os.path.join(OUT_DIR, f.replace(<span class="c-string">".smd"</span>,<span class="c-string">".fbx"</span>))
+    bpy.ops.export_scene.fbx(
+        filepath=out,
+        use_mesh_modifiers=<span class="c-keyword">True</span>,
+        add_leaf_bones=<span class="c-keyword">False</span>,
+        bake_anim=<span class="c-keyword">False</span>
+    )</pre>
+          </div>
+        </div>
+      </div>
+
+      <div class="step-block fade-in" id="src-b3">
+        <div class="step-block-header"><div class="step-index">03</div><h3>SKELETON RETARGETING</h3></div>
+        <div class="prose">
+          <p>For characters, the ValveBiped skeleton must be retargeted to an Apex-compatible rig. rmdlconv accepts FBX with a <code>--skeleton-target</code> reference RMDL for automatic retargeting.</p>
+          <div class="code-block">
+            <div class="code-header"><span class="code-lang">Shell</span><button class="code-copy" onclick="copyCode(this)">COPY</button></div>
+            <pre><span class="c-comment"># Use an existing Apex model as the skeleton reference</span>
+<span class="c-keyword">rmdlconv</span> <span class="c-flag">--fbx</span>  <span class="c-path">./fbx_out/hl2_soldier.fbx</span> \
+          <span class="c-flag">--skel</span> <span class="c-path">./apex_reference/medium_pilot.rmdl</span> \
+          <span class="c-flag">-o</span>    <span class="c-path">./r5_models/hl2_soldier.rmdl</span> \
+          <span class="c-flag">--to</span>   r5 <span class="c-flag">--retarget</span>
+
+<span class="c-comment"># For props / static meshes with no deformable rig:</span>
+<span class="c-keyword">rmdlconv</span> <span class="c-flag">--fbx</span> <span class="c-path">./fbx_out/barrel.fbx</span> <span class="c-flag">--to</span> r5 <span class="c-flag">--static</span></pre>
+          </div>
+          <div class="info-box tip"><span class="info-label">Tip</span>Static props with no skeleton are the easiest Source assets to port. <code>--static</code> skips all bone processing — ideal for environment props, crates, and vehicles.</div>
+        </div>
+      </div>
+
+      <div class="step-block fade-in" id="src-b4">
+        <div class="step-block-header"><div class="step-index">04</div><h3>MATERIAL REBUILD</h3></div>
+        <div class="prose">
+          <p>Source VMT materials are incompatible with Apex's RPAK material system. New materials must be authored using Apex texture conventions: <strong>col</strong> (albedo), <strong>nml</strong> (normal), <strong>spc</strong> (specular), <strong>gls</strong> (gloss).</p>
+          <div class="code-block">
+            <div class="code-header"><span class="code-lang">JSON — Apex material def</span><button class="code-copy" onclick="copyCode(this)">COPY</button></div>
+            <pre">{
+  <span class="c-string">"$type"</span>: <span class="c-string">"material"</span>,
+  <span class="c-string">"path"</span>: <span class="c-string">"material/models/props/barrel/barrel_col"</span>,
+  <span class="c-string">"settings"</span>: {
+    <span class="c-string">"surface"</span>: <span class="c-string">"metal"</span>,
+    <span class="c-string">"shader"</span>:  <span class="c-string">"skn_r5"</span>,
+    <span class="c-string">"textures"</span>: {
+      <span class="c-string">"col"</span>: <span class="c-string">"texture/models/props/barrel/barrel_col"</span>,
+      <span class="c-string">"nml"</span>: <span class="c-string">"texture/models/props/barrel/barrel_nml"</span>,
+      <span class="c-string">"spc"</span>: <span class="c-string">"texture/models/props/barrel/barrel_spc"</span>
+    }
+  }
+}</pre>
+          </div>
+          <p>Convert VTF textures to DXT1/DXT5 DDS, or use RePak's <code>txtr</code> asset type which handles conversion from standard image formats (PNG/TGA) directly.</p>
+        </div>
+      </div>
+
+      <div class="step-block fade-in" id="src-b5">
+        <div class="step-block-header"><div class="step-index">05</div><h3>COMPILE TO RMDL + PACK</h3></div>
+        <div class="prose">
+          <div class="code-block">
+            <div class="code-header"><span class="code-lang">Shell — full pipeline</span><button class="code-copy" onclick="copyCode(this)">COPY</button></div>
+            <pre><span class="c-comment"># 1. FBX → RMDL (static prop)</span>
+<span class="c-keyword">rmdlconv</span> <span class="c-flag">--fbx</span> barrel.fbx <span class="c-flag">--to</span> r5 <span class="c-flag">--static</span> \
+          <span class="c-flag">-o</span> <span class="c-path">./r5_models/models/props/barrel/barrel.rmdl</span>
+
+<span class="c-comment"># 2. Pack everything into RPAK</span>
+<span class="c-keyword">RePak</span> <span class="c-path">./barrel_port.json</span>
+
+<span class="c-comment"># 3. Deploy to R5SDK mod directory</span>
+<span class="c-keyword">cp</span> barrel_port.rpak <span class="c-path">"$R5SDK_MOD_DIR/paks/Win64/"</span>
+<span class="c-keyword">cp</span> barrel_port.starpak <span class="c-path">"$R5SDK_MOD_DIR/paks/Win64/"</span></pre>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<div class="divider"></div>
+
 
 <!-- TOOLS -->
 <section id="tools">
