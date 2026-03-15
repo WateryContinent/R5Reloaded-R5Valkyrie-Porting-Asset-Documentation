@@ -283,27 +283,11 @@
       <div class="step-block fade-in" id="tf1-s2">
         <div class="step-block-header"><div class="step-index">02</div><h3>CONVERT MODEL</h3></div>
         <div class="prose">
-          <p>TF1 MDLs carry a <strong>studiohdr version field</strong> — r1 files report version <code>53</code>, whereas Apex r5 expects <code>54</code> with an extended header.</p>
+          <p>TF1 MDLs carry a <strong>studiohdr version field</strong> — Titanfall 1 <code>.mdl</code> report version <code>v53</code>, whereas Apex Legends expects <code>v54</code> with an extended header, which is the rmdl v10 header. To convert the model, run the command below, replacing <code>mymodel.mdl</code> with the model that you're trying to convert.</p>
           <div class="code-block">
-            <div class="code-header"><span class="code-lang">Python — header probe</span><button class="code-copy" onclick="copyCode(this)">COPY</button></div>
-            <pre><span class="c-keyword">import</span> struct
-
-<span class="c-keyword">with</span> open(<span class="c-string">"model.mdl"</span>, <span class="c-string">"rb"</span>) <span class="c-keyword">as</span> f:
-    magic   = f.read(<span class="c-num">4</span>)          <span class="c-comment"># b"IDST"</span>
-    version = struct.unpack(<span class="c-string">"&lt;I"</span>, f.read(<span class="c-num">4</span>))[<span class="c-num">0</span>]
-    print(<span class="c-string">f"Magic: {magic}, Version: {version}"</span>)
-    <span class="c-comment"># R1 TF1 = 53 | R2 TF2 = 54 | R5 Apex = 54 (ext. header)</span></pre>
-          </div>
+            <div class="code-header"><span class="code-lang">BATCH</span><button class="code-copy" onclick="copyCode(this)">COPY</button></div>
+            <pre><span class="c-keyword">rmdlconv.exe</span> mymodel.mdl </div>
           <div style="overflow-x:auto;">
-          <table class="format-table">
-            <thead><tr><th>Field</th><th>TF1 r1</th><th>Apex r5</th></tr></thead>
-            <tbody>
-              <tr><td>studiohdr version</td><td>53</td><td>54 + ext header</td></tr>
-              <tr><td>VVD vertex format</td><td>48-byte tangents</td><td>32-byte packed</td></tr>
-              <tr><td>VTX strip flags</td><td>Valve standard</td><td>Modified hw skin</td></tr>
-              <tr><td>LOD dist fields</td><td>float[8]</td><td>float[5]</td></tr>
-            </tbody>
-          </table>
           </div>
         </div>
       </div>
