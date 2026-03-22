@@ -6,6 +6,7 @@
 <title>Asset Guide - R5V/R5R</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=Share+Tech+Mono&family=Bebas+Neue&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
+<link rel="icon" type="image/png" href="../images/icon.png">
 <style>
   :root {
     --bg: #050810;
@@ -45,10 +46,6 @@
   h1{font-family:'Bebas Neue',cursive;font-size:clamp(64px,9vw,130px);line-height:0.92;letter-spacing:3px;color:var(--text-bright);margin-bottom:16px;}
   h1 .accent{color:var(--accent);text-shadow:var(--glow-strong);}
   .hero-sub{font-size:17px;color:var(--text-dim);max-width:560px;margin-bottom:50px;font-weight:300;}
-  .hero-stats{display:flex;gap:50px;margin-bottom:50px;flex-wrap:wrap;}
-  .stat{display:flex;flex-direction:column;gap:4px;}
-  .stat-num{font-family:'Bebas Neue',cursive;font-size:36px;color:var(--accent);line-height:1;}
-  .stat-label{font-family:'Share Tech Mono',monospace;font-size:10px;letter-spacing:2px;color:var(--text-dim);text-transform:uppercase;}
   .hero-ctas{display:flex;gap:16px;flex-wrap:wrap;}
   .btn{font-family:'Share Tech Mono',monospace;font-size:12px;letter-spacing:2px;text-transform:uppercase;text-decoration:none;padding:14px 28px;transition:all 0.2s;cursor:pointer;border:none;display:inline-flex;align-items:center;gap:8px;}
   .btn-primary{background:var(--accent);color:#000;font-weight:600;}
@@ -143,7 +140,6 @@
     .nav-links{display:none;}
     .steps-container{grid-template-columns:1fr;}
     .steps-nav{display:none;}
-    .hero-stats{gap:24px;}
     .divider{margin:0 24px;}
   }
 </style>
@@ -169,9 +165,9 @@
 <header class="hero">
   <div class="hero-orb"></div>
   <div class="hero-orb2"></div>
-  <div class="hero-eyebrow">All things assests in R5Valkyire</div>
-  <h1>PORT MODELS<br>TO <span class="accent">R5Valkyire</span></h1>
-  <p class="hero-sub">Complete technical reference for converting models from Titanfall 1, Titanfall 2, and other Source Engine titles into R5Valkyire.</p>
+  <div class="hero-eyebrow">All things assets in R5Valkyrie</div>
+  <h1>PORT MODELS<br>TO <span class="accent">R5Valkyrie</span></h1>
+  <p class="hero-sub">Complete technical reference for converting models from Titanfall 1, Titanfall 2, and other Source Engine titles into R5Valkyrie.</p>
   <div class="hero-ctas">
     <a href="#tf1" class="btn btn-primary">Titanfall 1</a>
     <a href="#tf2" class="btn btn-primary">Titanfall 2</a>
@@ -193,9 +189,9 @@
       <div class="card-arrow">↓</div>
       <div class="card-dest">Target → Apex Legends</div>
       <div class="card-title">Titanfall 1 → APEX</div>
-      <div class="card-desc">Titanfall 1 uses the R1 model format (MDL/VVD/VTX/VVC) v52 — a modified Valve Source format.</div>
+      <div class="card-desc">TF1 uses a modified Source-style format (MDL/VVD/VTX/VVC). Requires two rmdlconv passes: TF1→TF2, then TF2→Apex. Animations need Crowbar decompile, studiomdl recompile, then R5-AnimConv. Textures delivered via VPK.</div>
       <div class="tag-list">
-        <span class="tag active">.mdl</span><span class="tag active">.vvd</span><span class="tag active">.vvc</span><span class="tag active">.vtx</span><span class="tag active">.phy</span><span class="tag">rmdlconv</span><span class="tag">RePak</span>
+        <span class="tag active">.mdl</span><span class="tag active">.vvd</span><span class="tag active">.vvc</span><span class="tag active">.vtx</span><span class="tag active">.phy</span><span class="tag">rmdlconv</span><span class="tag">R5-AnimConv</span><span class="tag">RePak</span><span class="tag">revpk</span>
       </div>
     </div>
     <div class="pipeline-card" style="--card-color:var(--tf2)">
@@ -204,9 +200,9 @@
       <div class="card-arrow">↓</div>
       <div class="card-dest">Target → Apex Legends</div>
       <div class="card-title">Titanfall 2 → APEX</div>
-      <div class="card-desc">Titanfall 2 uses R2 model format (MDL) v53 — a modified Valve Source format, this is more similar to Apexs RMDL v10 (Subversion v54).</div>
+      <div class="card-desc">TF2 uses MDL (v53), closest format relative to Apex's RMDL (v54). Single rmdlconv pass. Animations are already in RSEQ format — direct port with R5-AnimConv. Shorter pipeline than TF1.</div>
       <div class="tag-list">
-        <span class="tag active">.mdl</span><span class="tag active">.phy</span><span class="tag">rmdlconv</span><span class="tag">RePak</span>
+        <span class="tag active">.mdl</span><span class="tag active">.phy</span><span class="tag">rmdlconv</span><span class="tag">R5-AnimConv</span><span class="tag">RePak</span>
       </div>
     </div>
     <div class="pipeline-card" style="--card-color:var(--src)">
@@ -215,20 +211,20 @@
       <div class="card-arrow">↓</div>
       <div class="card-dest">Target → Apex Legends</div>
       <div class="card-title">SOURCE → APEX</div>
-      <div class="card-desc">HL2, Portal/Portal 2, CS:S, L4D, Team Fortress 2, etc. Standard MDL/VVD/VTX/PHY, Version depends on the game. Semi-Long pipeline — needs conversion, skeleton retargeting (Depending on the Game), and potential partial material rebuild.</div>
+      <div class="card-desc">HL2, Portal/Portal 2, CS:S, L4D, TF2 etc. Standard MDL/VVD/VTX. Decompile with Crowbar, import to Blender for skeleton work, recompile, then the same rmdlconv + R5-AnimConv + RePak path. Skeleton retargeting required for characters.</div>
       <div class="tag-list">
         <span class="tag active">.mdl</span><span class="tag">Crowbar</span><span class="tag">Blender</span><span class="tag">rmdlconv</span><span class="tag">RePak</span>
       </div>
     </div>
-        <div class="pipeline-card" style="--card-color:#2ecc71">
+    <div class="pipeline-card" style="--card-color:#2ecc71">
       <div class="card-source">Other Games</div>
-      <div style="font-family:'Bebas Neue';font-size:20px;color:var(--card-color);letter-spacing:2px">Other Games/Model Formats</div>
+      <div style="font-family:'Bebas Neue';font-size:20px;color:var(--card-color);letter-spacing:2px">Other Game Formats</div>
       <div class="card-arrow">↓</div>
       <div class="card-dest">Target → Blender → Apex Legends</div>
       <div class="card-title">BLENDER → APEX</div>
-      <div class="card-desc">Other Game Model format like FBX, OBJ etc. Longest pipeline — possible skeleton retargeting, and full material rebuild.</div>
+      <div class="card-desc">FBX, OBJ, SEModel and other formats. Import into Blender, optionally retarget skeleton, export SMD, compile with studiomdl, then rmdlconv + R5-AnimConv + RePak. Full material rebuild required.</div>
       <div class="tag-list">
-        <span class="tag active">.OBJ</span><span class="tag active">.FBX</span><span class="tag active">.SEMODEL</span><span class="tag">Crowbar</span><span class="tag">Blender</span><span class="tag">rmdlconv</span><span class="tag">RePak</span>
+        <span class="tag active">.OBJ</span><span class="tag active">.FBX</span><span class="tag active">.SEMODEL</span><span class="tag">Blender</span><span class="tag">rmdlconv</span><span class="tag">RePak</span>
       </div>
     </div>
   </div>
@@ -237,17 +233,18 @@
   <div style="overflow-x:auto;">
   <table class="format-table fade-in">
     <thead>
-      <tr><th>Feature</th><th>Titanfall 1</th><th>Titanfall 2</th><th>Source (Valve)</th><th>Blender</th><th>Apex Legends R5V/R5R (Target)</th></tr>
+      <tr><th>Feature</th><th>Titanfall 1</th><th>Titanfall 2</th><th>Source (Valve)</th><th>Blender</th><th>Apex R5V/R5R (Target)</th></tr>
     </thead>
     <tbody>
-      <tr><td>Model Format</td><td>MDL/VVD/VVC/VTX</td><td>MDL</td><td>MDL/VVD/VTX</td><td>SMD</td><td>RMDL</td></tr>
-      <tr><td>Skeleton System</td><td><span class="badge badge-ok">Direct Conversion</span></td><td><span class="badge badge-ok">Direct Conversion</span></td><td><span class="badge badge-bad">Requires Remap*</span></td><td><span class="badge badge-bad">Requires Remap*</span></td><td><span class="badge badge-target">TARGET</span></td></tr>
-      <tr><td>Physics (PHY)</td><td><span class="badge badge-warn">Needs Conversion</span></td><td><span class="badge badge-warn">Needs Conversion</span></td><td><span class="badge badge-warn">Needs Conversion</span></td><td><span class="badge badge-bad">NO PATH</span></td><td><span class="badge badge-target">TARGET</span></td></tr>
-      <tr><td>Material Paths</td><td><span class="badge badge-ok">Direct Conversion</span></td><td><span class="badge badge-ok">Direct Conversion</span></td><td><span class="badge badge-bad">Partial Rebuild</span></td><td><span class="badge badge-warn">Slight Tweak</span></td><td><span class="badge badge-target">TARGET</span></td></tr>
-      <tr><td>Animations (RSEQ)</td><td><span class="badge badge-bad">VCD → RSEQ</span></td><td><span class="badge badge-ok">Direct Port</span></td><td><span class="badge badge-bad">Needs Conversion</span></td><td><span class="badge badge-bad">Needs Conversion</span></td><td><span class="badge badge-target">TARGET</span></td></tr>
+      <tr><td>Model Format</td><td>MDL/VVD/VVC/VTX (v52)</td><td>MDL (v53)</td><td>MDL/VVD/VTX</td><td>SMD → MDL</td><td>RMDL (v54)</td></tr>
+      <tr><td>Conversion Passes</td><td><span class="badge badge-warn">2 passes (TF1→TF2→Apex)</span></td><td><span class="badge badge-ok">1 pass (TF2→Apex)</span></td><td><span class="badge badge-warn">Decompile + recompile</span></td><td><span class="badge badge-bad">Full rebuild</span></td><td><span class="badge badge-target">TARGET</span></td></tr>
+      <tr><td>Physics (PHY)</td><td><span class="badge badge-warn">World models only</span></td><td><span class="badge badge-warn">World models only</span></td><td><span class="badge badge-warn">World models only</span></td><td><span class="badge badge-bad">No direct path</span></td><td><span class="badge badge-target">TARGET</span></td></tr>
+      <tr><td>Textures</td><td><span class="badge badge-ok">VMT/VTF via VPK</span></td><td><span class="badge badge-ok">VMT/VTF via VPK</span></td><td><span class="badge badge-ok">VMT/VTF via VPK</span></td><td><span class="badge badge-warn">Manual rebuild</span></td><td><span class="badge badge-target">TARGET</span></td></tr>
+      <tr><td>Animations</td><td><span class="badge badge-warn">Crowbar + R5-AnimConv</span></td><td><span class="badge badge-ok">R5-AnimConv direct</span></td><td><span class="badge badge-bad">Full conversion needed</span></td><td><span class="badge badge-bad">Full conversion needed</span></td><td><span class="badge badge-target">TARGET</span></td></tr>
     </tbody>
   </table>
-  <div class="info-box tip"><span class="info-label">Note</span>Anything with * next to do it means it really depends on what you want to do with the model, if its a weapon from GMOD and you want it to be used with Apex Legends Character Models, then it will require remapping of the skeleton, if you're going to use a GMOD gun with a GMOD character model, then you can save time and not remap it however it wont work with apex models but will work and look fine with the GMOD Model</div>
+  </div>
+  <div class="info-box tip"><span class="info-label">Note</span>Skeleton retargeting is only required if you want your ported model to work with existing Apex character skeletons. For a standalone port (e.g. a TF1 weapon using its own rig), no retargeting is needed — the skeleton converts directly.</div>
 </section>
 
 <div class="divider"></div>
@@ -256,14 +253,14 @@
 <section id="tf1">
   <div class="section-label">02 — Pipeline A</div>
   <h2 style="color:var(--tf1)">Titanfall 1 → APEX</h2>
-  <p class="section-intro">Titanfall 1 ships with source-style MDL/VVD/VTX files, these have the same extenstion as regular source but they have been modified by respawn. rmdlconv handles the heavy lifting in getting the models in the correct format and ready to use.</p>
+  <p class="section-intro">TF1 ships with a modified Source-style format (MDL/VVD/VTX/VVC). rmdlconv handles the conversion in two passes. Animations need to be decompiled, recompiled, then converted with R5-AnimConv. Textures are delivered via VPK.</p>
   <div class="steps-container">
     <nav class="steps-nav">
-      <a href="#tf1-s1" class="step-nav-item active"><span class="step-num">01</span>Extracting Assets</a>
+      <a href="#tf1-s1" class="step-nav-item active"><span class="step-num">01</span>Extract Assets</a>
       <a href="#tf1-s2" class="step-nav-item"><span class="step-num">02</span>Convert Model</a>
       <a href="#tf1-s3" class="step-nav-item"><span class="step-num">03</span>Convert Animations</a>
-      <a href="#tf1-s4" class="step-nav-item"><span class="step-num">04</span>Material Paths</a>
-      <a href="#tf1-s5" class="step-nav-item"><span class="step-num">05</span>PHY Physics (Optinal)</a>
+      <a href="#tf1-s4" class="step-nav-item"><span class="step-num">04</span>Textures &amp; VPK</a>
+      <a href="#tf1-s5" class="step-nav-item"><span class="step-num">05</span>GUID Patch</a>
       <a href="#tf1-s6" class="step-nav-item"><span class="step-num">06</span>Pack with RePak</a>
     </nav>
     <div class="steps-content">
@@ -271,121 +268,229 @@
       <div class="step-block fade-in" id="tf1-s1">
         <div class="step-block-header"><div class="step-index">01</div><h3>EXTRACT ASSETS FROM TF1</h3></div>
         <div class="prose">
-          <p>All TF1 assets live inside <code>.vpk</code> archives, generally within the common vpk. Use <strong>ReVPK.exe</strong> (located within the <strong>bin</strong> folder of the game installation), <strong>Titanfall VPK Tool</strong> or  <strong>ReVPKEdit</strong>  to extract your desired assets from the Titanfall install to extract model bundles.</p>
-          <div class="code-block">
-            <div class="code-header"><span class="code-lang">Shell</span><button class="code-copy" onclick="copyCode(this)">COPY</button></div>
-            <pre><span class="c-comment"># Using ReVPK, this dumps the entire vpk.</span>
-<span class="c-keyword">revpk.exe</span> <span class="c-flag">-unpack</span> <span class="c-path">englishclient_mp_common.bsp.pak000_dir.vpk</span> <span class="c-path">./extracted/</span></div>
-          <div class="info-box tip"><span class="info-label">Note</span>Both ReVPKEdit and the Titanfall VPK Tool are GUI tool which allows you to extract specific assets from the VPKs.</div>
-          <p>You need all four sibling files: <code>.mdl</code> (header + bones + surfaces), <code>.vvd</code> (vertex data), <code>.vtx</code> (mesh strips + LODs), and optionally <code>.phy</code> for collision. rmdlconv currently has issues with Titanfall 1 and Titanfall 2 <code>.phy</code> conversion, I have resolved this but it has not released it yet due to other issues.</p>
+          <p>All TF1 assets live inside <code>.vpk</code> archives. Use <strong>Titanfall VPK Tool</strong> (recommended GUI tool — supports Respawn's non-standard VPK format) to browse and extract model files. Open the <code>_dir</code> VPK, navigate to <code>models/weapons/&lt;weapon&gt;/</code> and extract.</p>
+          <div class="info-box tip"><span class="info-label">Required Files</span>
+            <strong>First person (ptpov_):</strong> <code>.mdl</code>, <code>.vtx</code>, <code>.vvc</code>, <code>.vvd</code> — no <code>.phy</code> needed.<br>
+            <strong>World model (w_):</strong> <code>.mdl</code>, <code>.vtx</code>, <code>.vvc</code>, <code>.vvd</code>, <code>.phy</code>.
+          </div>
+          <p>Organise extracted files into separate folders per variant — e.g. <code>ptpov_p2011_auto/</code> and <code>w_p2011_auto/</code>. Textures can be extracted now or later, order doesn't matter.</p>
+          <div class="info-box note"><span class="info-label">VVC files</span>The <code>.vvc</code> (vertex colour) file is TF1-specific. TF2 and Apex don't use it — rmdlconv handles it during conversion and it can be discarded after the Apex-format files are produced.</div>
         </div>
       </div>
 
       <div class="step-block fade-in" id="tf1-s2">
-        <div class="step-block-header"><div class="step-index">02</div><h3>CONVERT MODEL</h3></div>
+        <div class="step-block-header"><div class="step-index">02</div><h3>CONVERT MODEL (TWO PASSES)</h3></div>
         <div class="prose">
-          <p>TF1 MDLs carry a <strong>studiohdr version field</strong> — Titanfall 1 <code>.mdl</code> report version <code>v53</code>, whereas Apex Legends expects <code>v54</code> with an extended header, which is the rmdl v10 header. To convert the model, run the command below, replacing <code>mymodel.mdl</code> with the model that you're trying to convert.</p>
+          <p>rmdlconv can't go TF1→Apex in one shot — it requires two passes: <strong>TF1→TF2</strong> first, then <strong>TF2→Apex</strong>. This is normal. Just drag the <code>.mdl</code> onto <code>rmdlconv.exe</code> or run it from the command line.</p>
+
+          <p><strong>Pass 1 — TF1 → TF2:</strong></p>
           <div class="code-block">
-            <div class="code-header"><span class="code-lang">BATCH</span><button class="code-copy" onclick="copyCode(this)">COPY</button></div>
-            <pre><span class="c-keyword">rmdlconv.exe</span> mymodel.mdl </div>
-          <div style="overflow-x:auto;">
+            <div class="code-header"><span class="code-lang">Shell</span><button class="code-copy" onclick="copyCode(this)">COPY</button></div>
+            <pre><span class="c-comment"># Run rmdlconv on the TF1 .mdl — outputs a .mdl_new alongside it</span>
+<span class="c-keyword">rmdlconv.exe</span> <span class="c-path">ptpov_p2011_auto.mdl</span></pre>
           </div>
+          <p>This produces a <code>.mdl_new</code> file. Rename it to <code>.mdl</code> — that's your TF2-format model. Keep the original TF1 <code>.mdl</code> safe in a separate folder (you'll need it for Step 3).</p>
+
+          <div class="info-box tip"><span class="info-label">Tip — folder organisation</span>Create a <code>tf2conv/</code> subfolder. Copy all files there, delete the <code>.mdl_new</code> from the root, remove the original <code>.mdl</code> from <code>tf2conv/</code>, and rename <code>.mdl_new</code> → <code>.mdl</code> inside <code>tf2conv/</code>. This way you always have the originals to fall back to.</div>
+
+          <p><strong>Pass 2 — TF2 → Apex:</strong></p>
+          <div class="code-block">
+            <div class="code-header"><span class="code-lang">Shell</span><button class="code-copy" onclick="copyCode(this)">COPY</button></div>
+            <pre><span class="c-comment"># Create an apexconv/ subfolder, copy tf2conv/ files into it, then run:</span>
+<span class="c-keyword">rmdlconv.exe</span> <span class="c-path">ptpov_p2011_auto.mdl</span>
+
+<span class="c-comment"># Outputs: .rmdl + .vg (+ .phy if world model)</span>
+<span class="c-comment"># Delete: .mdl, .vvc, .vvd, .vtx — keep only .rmdl and .vg</span></pre>
+          </div>
+          <div class="info-box note"><span class="info-label">Output files</span><code>.rmdl</code> is the Apex model descriptor. <code>.vg</code> is the vertex geometry — RePak picks it up automatically alongside the <code>.rmdl</code>, no need to reference it separately in <code>build.json</code>.</div>
         </div>
       </div>
 
       <div class="step-block fade-in" id="tf1-s3">
-        <div class="step-block-header"><div class="step-index">03</div><h3>Convert Animations</h3></div>
+        <div class="step-block-header"><div class="step-index">03</div><h3>CONVERT ANIMATIONS</h3></div>
         <div class="prose">
-          <p><strong>rmdlconv</strong> reads r1 MDL/VVD/VTX and emits r5-compatible RMDL. Use the latest build — PHY and VVD size field fixes are critical for crash-free loading.</p>
-          <div class="code-block">
-            <div class="code-header"><span class="code-lang">Shell — basic conversion</span><button class="code-copy" onclick="copyCode(this)">COPY</button></div>
-            <pre><span class="c-comment"># Convert a single TF1 model to Apex r5 RMDL</span>
-<span class="c-keyword">rmdlconv</span> <span class="c-flag">-i</span> <span class="c-path">./extracted/tf1/models/weapons/r101.mdl</span> \
-          <span class="c-flag">-o</span> <span class="c-path">./output/r5/models/weapons/r101.rmdl</span> \
-          <span class="c-flag">--from</span> r1 <span class="c-flag">--to</span> r5
+          <p>R5-AnimConv needs a compiled <code>.mdl</code> to work with — not the rmdlconv output, but a fresh recompile of the original TF1 model's skeleton and animations. This requires three sub-steps.</p>
 
-<span class="c-comment"># Batch convert entire directory</span>
-<span class="c-keyword">rmdlconv</span> <span class="c-flag">--batch</span> <span class="c-path">./extracted/tf1/models/</span> \
-          <span class="c-flag">-o</span>     <span class="c-path">./output/r5/models/</span> \
-          <span class="c-flag">--from</span> r1 <span class="c-flag">--to</span> r5 <span class="c-flag">--verbose</span></pre>
-          </div>
+          <p><strong>3a — Decompile original TF1 .mdl with Crowbar:</strong></p>
           <div class="code-block">
-            <div class="code-header"><span class="code-lang">JSON — bone remap</span><button class="code-copy" onclick="copyCode(this)">COPY</button></div>
-            <pre">{
-  <span class="c-string">"ValveBiped.Bip01_Spine"</span>:      <span class="c-string">"spine_0"</span>,
-  <span class="c-string">"ValveBiped.Bip01_Spine1"</span>:     <span class="c-string">"spine_1"</span>,
-  <span class="c-string">"ValveBiped.Bip01_L_Clavicle"</span>: <span class="c-string">"clavicle_L"</span>,
-  <span class="c-string">"ValveBiped.Bip01_R_Clavicle"</span>: <span class="c-string">"clavicle_R"</span>
-}</pre>
+            <div class="code-header"><span class="code-lang">Crowbar</span><button class="code-copy" onclick="copyCode(this)">COPY</button></div>
+            <pre><span class="c-comment"># Open Crowbar 0.74, go to Decompile tab</span>
+<span class="c-comment"># Set MDL input to your ORIGINAL TF1 .mdl (not the converted one)</span>
+<span class="c-comment"># Output to a subfolder e.g. decompiled/</span>
+<span class="c-comment"># Use default settings and hit Decompile</span>
+<span class="c-comment"># Produces: .qc, reference .smd, animation .smd files</span></pre>
           </div>
+
+          <p><strong>3b — Recompile with studiomdl:</strong></p>
+          <div class="code-block">
+            <div class="code-header"><span class="code-lang">Shell</span><button class="code-copy" onclick="copyCode(this)">COPY</button></div>
+            <pre><span class="c-comment"># Any Source Engine studiomdl works (Portal 2, HL2, etc.)</span>
+<span class="c-keyword">studiomdl.exe</span> <span class="c-flag">-game</span> <span class="c-path">"C:\...\Portal 2\portal2"</span> <span class="c-flag">-nop4</span> <span class="c-path">ptpov_p2011_auto.qc</span>
+
+<span class="c-comment"># Output: a freshly compiled .mdl in the game's models/ directory</span>
+<span class="c-comment"># Move it to a compiled/ subfolder</span></pre>
+          </div>
+
+          <p><strong>3c — Run R5-AnimConv:</strong></p>
+          <div class="code-block">
+            <div class="code-header"><span class="code-lang">Shell</span><button class="code-copy" onclick="copyCode(this)">COPY</button></div>
+            <pre><span class="c-keyword">R5-AnimConv.exe</span> <span class="c-path">"compiled\ptpov_p2011_auto.mdl"</span> <span class="c-flag">-sp</span> <span class="c-string">animseq/weapons/autopistol_tf1</span> <span class="c-flag">-rp</span> <span class="c-string">animrig/weapons/autopistol_tf1</span>
+
+<span class="c-comment"># -sp = output path for .rseq sequence files (arbitrary, pick a sensible convention)</span>
+<span class="c-comment"># -rp = output path for the .rrig rig file (arbitrary)</span>
+<span class="c-comment"># Outputs: .rrig + one .rseq per animation sequence</span>
+<span class="c-comment"># Also prints the full RePak JSON arig entry — copy it for build.json</span></pre>
+          </div>
+          <div class="info-box tip"><span class="info-label">Paths are arbitrary</span>The <code>-sp</code> and <code>-rp</code> paths can be anything you want. Convention is <code>animseq/&lt;category&gt;/&lt;name&gt;</code> and <code>animrig/&lt;category&gt;/&lt;name&gt;</code>. For titans: <code>animseq/titans/stryder</code>. For characters: <code>animseq/characters/pilot</code>. It just needs to be consistent with what you put in <code>build.json</code>.</div>
         </div>
       </div>
 
       <div class="step-block fade-in" id="tf1-s4">
-        <div class="step-block-header"><div class="step-index">04</div><h3>Material</h3></div>
+        <div class="step-block-header"><div class="step-index">04</div><h3>TEXTURES &amp; VPK</h3></div>
         <div class="prose">
-          <p>TF1 MDLs reference materials as <code>materials/models/weapons/...</code> VMT paths. Apex uses an internal RPAK material asset system — all surface references need repathing.</p>
-          <div class="code-block">
-            <div class="code-header"><span class="code-lang">Shell — matpath flag</span><button class="code-copy" onclick="copyCode(this)">COPY</button></div>
-            <pre><span class="c-keyword">rmdlconv</span> <span class="c-flag">-i</span> model.mdl <span class="c-flag">--from</span> r1 <span class="c-flag">--to</span> r5 \
-          <span class="c-flag">--matmap</span> <span class="c-path">./matmap.json</span>
+          <p>TF1 textures are <code>.vtf</code> files paired with <code>.vmt</code> material definitions. R5Reloaded still supports VMTs natively, so you can use them directly without converting to Apex's native material format.</p>
 
-<span class="c-comment"># matmap.json format:</span>
-<span class="c-comment"># { "materials/models/weapons/r101": "material/models/weapons/r101/r101" }</span></pre>
+          <p>Extract the texture files from the TF1 VPK using Titanfall VPK Tool — navigate to <code>materials/models/weapons/&lt;weapon&gt;/</code> and grab the <code>.vmt</code> and all <code>.vtf</code> files (<code>_col</code>, <code>_ilm</code>, <code>_spc</code>, <code>_nml</code>).</p>
+
+          <p>Stage them in the correct path structure and create a manifest, then build with revpk:</p>
+          <div class="code-block">
+            <div class="code-header"><span class="code-lang">Folder structure</span><button class="code-copy" onclick="copyCode(this)">COPY</button></div>
+            <pre>vpk/
+└── materials/
+    └── models/
+        └── weapons/
+            └── p2011_auto/
+                ├── p2011_auto.vmt
+                ├── p2011_auto_col.vtf
+                ├── p2011_auto_ilm.vtf
+                ├── p2011_auto_nml.vtf
+                └── p2011_auto_spc.vtf</pre>
           </div>
-          <div class="info-box note"><span class="info-label">Note</span>Apex material assets must exist in your RPAK before the model can reference them. Author stub materials in RePak's JSON definition first, then reference their asset paths in the remap.</div>
+          <div class="code-block">
+            <div class="code-header"><span class="code-lang">Manifest — englishclient_watery_common.txt</span><button class="code-copy" onclick="copyCode(this)">COPY</button></div>
+            <pre>"BuildManifest"
+{
+    "materials\models\weapons\p2011_auto\p2011_auto_col.vtf"
+    {
+        "preloadSize"    "0"
+        "loadFlags"      "1049857"
+        "textureFlags"   "8"
+        "useCompression" "1"
+        "deDuplicate"    "1"
+    }
+    <span class="c-comment">// repeat for _ilm (loadFlags 1049857, textureFlags 8)</span>
+    <span class="c-comment">// _spc (loadFlags 1281, textureFlags 8)</span>
+    <span class="c-comment">// _nml (loadFlags 1049857, textureFlags 0)</span>
+    <span class="c-comment">// .vmt (loadFlags 1281, textureFlags 0)</span>
+}</pre>
+          </div>
+          <div class="code-block">
+            <div class="code-header"><span class="code-lang">Shell — build VPK</span><button class="code-copy" onclick="copyCode(this)">COPY</button></div>
+            <pre><span class="c-keyword">revpk</span> <span class="c-flag">-pack</span> english client watery_common <span class="c-path">"vpk/"</span> <span class="c-path">"build/"</span>
+<span class="c-comment"># Outputs: englishclient_watery_common.pak000_dir.vpk + client_watery_common.pak000_000.vpk</span>
+<span class="c-comment"># Drop both into your mod's vpk/ folder</span></pre>
+          </div>
+          <div class="info-box note"><span class="info-label">Texture flag reference</span>
+            <code>_col</code> / <code>_ilm</code>: loadFlags <code>1049857</code>, textureFlags <code>8</code><br>
+            <code>_spc</code>: loadFlags <code>1281</code>, textureFlags <code>8</code><br>
+            <code>_nml</code>: loadFlags <code>1049857</code>, textureFlags <code>0</code><br>
+            <code>.vmt</code>: loadFlags <code>1281</code>, textureFlags <code>0</code>
+          </div>
         </div>
       </div>
 
       <div class="step-block fade-in" id="tf1-s5">
-        <div class="step-block-header"><div class="step-index">05</div><h3>PHY PHYSICS CONVERSION</h3></div>
+        <div class="step-block-header"><div class="step-index">05</div><h3>GUID PATCH (VMT FALLBACK)</h3></div>
         <div class="prose">
-          <p>TF1 <code>.phy</code> files use the IVP Compact Surface format — same as standard Source Engine. rmdlconv's PHY converter handles the critical size-field fix that caused crashes in older builds.</p>
+          <p>After rmdlconv, the <code>.rmdl</code> has texture GUIDs pointing to Apex's internal material asset system. Since we're using VMTs instead, these GUIDs need to be zeroed out — the engine then falls back to resolving textures by material path name.</p>
+          <p>Each <code>mstudiotexture_t_v54</code> entry in the RMDL header is 12 bytes: 4 bytes for the name string offset (do not touch), and 8 bytes for the GUID (zero these). The header fields to read are at fixed offsets:</p>
+          <div class="code-block">
+            <div class="code-header"><span class="code-lang">RMDL v54 header offsets</span><button class="code-copy" onclick="copyCode(this)">COPY</button></div>
+            <pre><span class="c-comment">// studiohdr_t_v54 layout (all int32 little-endian)</span>
+<span class="c-comment">// 0xD0 = numtextures   (int32)</span>
+<span class="c-comment">// 0xD4 = textureindex  (int32, absolute file offset to texture entries)</span>
+<span class="c-comment">// Each mstudiotexture_t_v54 entry = 12 bytes:</span>
+<span class="c-comment">//   bytes 0-3:  sznameindex  (relative string offset — DO NOT TOUCH)</span>
+<span class="c-comment">//   bytes 4-11: GUID         (zero these for VMT fallback)</span></pre>
+          </div>
+          <div class="code-block">
+            <div class="code-header"><span class="code-lang">Python — zero_guids.py</span><button class="code-copy" onclick="copyCode(this)">COPY</button></div>
+            <pre><span class="c-keyword">import</span> sys, struct
+
+<span class="c-keyword">def</span> zero_rmdl_guids(path):
+    <span class="c-keyword">with</span> open(path, <span class="c-string">'rb'</span>) <span class="c-keyword">as</span> f:
+        data = bytearray(f.read())
+    numtextures  = struct.unpack_from(<span class="c-string">'&lt;i'</span>, data, <span class="c-num">0xD0</span>)[<span class="c-num">0</span>]
+    textureindex = struct.unpack_from(<span class="c-string">'&lt;i'</span>, data, <span class="c-num">0xD4</span>)[<span class="c-num">0</span>]
+    <span class="c-keyword">for</span> i <span class="c-keyword">in</span> range(numtextures):
+        off = textureindex + i * <span class="c-num">12</span>
+        data[off+<span class="c-num">4</span>:off+<span class="c-num">12</span>] = <span class="c-string">b'\x00'</span> * <span class="c-num">8</span>
+    <span class="c-keyword">with</span> open(path, <span class="c-string">'wb'</span>) <span class="c-keyword">as</span> f:
+        f.write(data)
+    print(<span class="c-string">f"Zeroed {numtextures} GUIDs in {path}"</span>)
+
+zero_rmdl_guids(sys.argv[<span class="c-num">1</span>])</pre>
+          </div>
           <div class="code-block">
             <div class="code-header"><span class="code-lang">Shell</span><button class="code-copy" onclick="copyCode(this)">COPY</button></div>
-            <pre><span class="c-comment"># PHY is converted alongside the model automatically</span>
-<span class="c-keyword">rmdlconv</span> <span class="c-flag">-i</span> model.mdl <span class="c-flag">--phy</span> model.phy <span class="c-flag">--to</span> r5
-
-<span class="c-comment"># The converter fixes:</span>
-<span class="c-comment">#  - compactsurface header totalTris field</span>
-<span class="c-comment">#  - ledge tree offset recalculation</span>
-<span class="c-comment">#  - surface data pointer fixup for r5 memory layout</span></pre>
+            <pre><span class="c-keyword">python</span> zero_guids.py <span class="c-path">ptpov_p2011_auto.rmdl</span></pre>
           </div>
-          <div class="info-box warn"><span class="info-label">Common Crash</span>If Apex crashes on model load with <code>phys_InitModelBounds</code> in the callstack, the PHY header's <code>surfaceSize</code> is wrong. Rerun with <code>--phy-fix-size</code> flag.</div>
         </div>
       </div>
 
       <div class="step-block fade-in" id="tf1-s6">
         <div class="step-block-header"><div class="step-index">06</div><h3>PACK WITH RePak</h3></div>
         <div class="prose">
-          <p>With converted RMDLs ready, define a RePak JSON manifest and build the final RPAK for R5Reloaded / R5SDK.</p>
+          <p>With the converted <code>.rmdl</code>/<code>.vg</code> and animation files ready, set up your assets folder and build.json. The R5-AnimConv output already gives you the <code>arig</code> JSON block to paste in.</p>
           <div class="code-block">
-            <div class="code-header"><span class="code-lang">JSON — RePak definition</span><button class="code-copy" onclick="copyCode(this)">COPY</button></div>
-            <pre">{
-  <span class="c-string">"name"</span>: <span class="c-string">"tf1_weapons_port"</span>,
+            <div class="code-header"><span class="code-lang">Assets folder structure</span><button class="code-copy" onclick="copyCode(this)">COPY</button></div>
+            <pre>assets/
+├── animrig/weapons/autopistol_tf1/
+│   └── ptpov_p2011_auto.rrig
+├── animseq/weapons/autopistol_tf1/
+│   └── *.rseq  <span class="c-comment">(all sequences from R5-AnimConv)</span>
+└── mdl/weapons/p2011_auto_tf1/
+    ├── ptpov_p2011_auto.rmdl
+    └── ptpov_p2011_auto.vg  <span class="c-comment">(RePak picks this up automatically)</span></pre>
+          </div>
+          <div class="code-block">
+            <div class="code-header"><span class="code-lang">JSON — build.json</span><button class="code-copy" onclick="copyCode(this)">COPY</button></div>
+            <pre>{
   <span class="c-string">"version"</span>: <span class="c-num">8</span>,
-  <span class="c-string">"assets"</span>: [
+  <span class="c-string">"keepDevOnly"</span>: <span class="c-keyword">true</span>,
+  <span class="c-string">"name"</span>: <span class="c-string">"build"</span>,
+  <span class="c-string">"streamFileMandatory"</span>: <span class="c-string">"paks/Win64/build.starpak"</span>,
+  <span class="c-string">"streamFileOptional"</span>: <span class="c-string">"paks/Win64/build.opt.starpak"</span>,
+  <span class="c-string">"assetsDir"</span>: <span class="c-string">"assets/"</span>,
+  <span class="c-string">"outputDir"</span>: <span class="c-string">"./build/"</span>,
+  <span class="c-string">"compressLevel"</span>: <span class="c-num">6</span>,
+  <span class="c-string">"compressWorkers"</span>: <span class="c-num">16</span>,
+  <span class="c-string">"files"</span>: [
     {
-      <span class="c-string">"$type"</span>: <span class="c-string">"rmdl"</span>,
-      <span class="c-string">"path"</span>: <span class="c-string">"models/weapons/r101/r101.rmdl"</span>,
-      <span class="c-string">"settings"</span>: {
-        <span class="c-string">"animrigs"</span>:  [<span class="c-string">"models/weapons/r101/r101.rrig"</span>],
-        <span class="c-string">"sequences"</span>: [<span class="c-string">"models/weapons/r101/r101.rseq"</span>]
-      }
+      <span class="c-string">"_type"</span>: <span class="c-string">"arig"</span>,
+      <span class="c-string">"_path"</span>: <span class="c-string">"animrig/weapons/autopistol_tf1/ptpov_p2011_auto.rrig"</span>,
+      <span class="c-string">"$sequences"</span>: [
+        <span class="c-comment">// paste full list from R5-AnimConv console output</span>
+        <span class="c-string">"animseq/weapons/autopistol_tf1/idle_seq.rseq"</span>,
+        <span class="c-string">"animseq/weapons/autopistol_tf1/attack_seq.rseq"</span>
+        <span class="c-comment">// ...</span>
+      ]
     },
     {
-      <span class="c-string">"$type"</span>: <span class="c-string">"material"</span>,
-      <span class="c-string">"path"</span>: <span class="c-string">"material/models/weapons/r101/r101_col"</span>,
-      <span class="c-string">"settings"</span>: { <span class="c-string">"surface"</span>: <span class="c-string">"metal"</span> }
+      <span class="c-string">"_type"</span>: <span class="c-string">"mdl_"</span>,
+      <span class="c-string">"_path"</span>: <span class="c-string">"mdl/weapons/p2011_auto_tf1/ptpov_p2011_auto.rmdl"</span>,
+      <span class="c-string">"$animrigs"</span>: [
+        <span class="c-string">"animrig/weapons/autopistol_tf1/ptpov_p2011_auto.rrig"</span>
+      ]
     }
   ]
 }</pre>
           </div>
           <div class="code-block">
-            <div class="code-header"><span class="code-lang">Shell — build RPAK</span><button class="code-copy" onclick="copyCode(this)">COPY</button></div>
-            <pre><span class="c-keyword">RePak</span> <span class="c-path">./tf1_weapons_port.json</span>
-<span class="c-comment"># Output: tf1_weapons_port.rpak + tf1_weapons_port.starpak</span>
-<span class="c-comment"># Drop both into: ApexLegends/r5/mods/yourmod/paks/Win64/</span></pre>
+            <div class="code-header"><span class="code-lang">Shell — build RPak</span><button class="code-copy" onclick="copyCode(this)">COPY</button></div>
+            <pre><span class="c-keyword">RePak.exe</span> <span class="c-path">build.json</span>
+<span class="c-comment"># Output: build/build.rpak + build/build.starpak + build/build.opt.starpak</span>
+<span class="c-comment"># Drop all three into: R5SDK/mods/yourmod/paks/Win64/</span></pre>
           </div>
         </div>
       </div>
@@ -400,116 +505,71 @@
 <section id="tf2">
   <div class="section-label">03 — Pipeline B</div>
   <h2 style="color:var(--tf2)">Titanfall 2 → APEX</h2>
-  <p class="section-intro">Titanfall 2's r2 RMDL is the closest format relative to Apex's r5. No intermediate FBX step needed for most assets — direct conversion is possible.</p>
+  <p class="section-intro">TF2's MDL (v53) is the closest format to Apex's RMDL (v54). A single rmdlconv pass is all you need for the model. Animations are already in a compatible format — R5-AnimConv handles the conversion directly without the Crowbar decompile/recompile step needed for TF1.</p>
 
   <div class="steps-container">
     <nav class="steps-nav">
       <a href="#tf2-s1" class="step-nav-item active"><span class="step-num">01</span>Extract from RPAK</a>
-      <a href="#tf2-s2" class="step-nav-item"><span class="step-num">02</span>r2 vs r5 Diffs</a>
-      <a href="#tf2-s3" class="step-nav-item"><span class="step-num">03</span>Run rmdlconv</a>
-      <a href="#tf2-s4" class="step-nav-item"><span class="step-num">04</span>Animation Sequences</a>
+      <a href="#tf2-s2" class="step-nav-item"><span class="step-num">02</span>Convert Model</a>
+      <a href="#tf2-s3" class="step-nav-item"><span class="step-num">03</span>Convert Animations</a>
+      <a href="#tf2-s4" class="step-nav-item"><span class="step-num">04</span>Textures &amp; VPK</a>
       <a href="#tf2-s5" class="step-nav-item"><span class="step-num">05</span>Pack + Deploy</a>
     </nav>
     <div class="steps-content">
 
       <div class="step-block fade-in" id="tf2-s1">
-        <div class="step-block-header"><div class="step-index">01</div><h3>EXTRACT FROM TF2 RPAK</h3></div>
+        <div class="step-block-header"><div class="step-index">01</div><h3>EXTRACT FROM TF2</h3></div>
         <div class="prose">
-          <p>TF2 assets are stored in RPAK files at <code>Titanfall2/r2/paks/Win64/</code>. Use RSX with ZSTD support to extract r2 RMDLs, sequences, and rigs.</p>
-          <div class="code-block">
-            <div class="code-header"><span class="code-lang">Shell</span><button class="code-copy" onclick="copyCode(this)">COPY</button></div>
-            <pre><span class="c-comment"># RSX with ZSTD (compressed RPAKs)</span>
-<span class="c-keyword">rsx</span> <span class="c-flag">--rpak</span>         <span class="c-path">Titanfall2/r2/paks/Win64/mp_common.rpak</span> \
-    <span class="c-flag">--extract-type</span> rmdl \
-    <span class="c-flag">--output</span>       <span class="c-path">./tf2_extracted/models/</span>
-
-<span class="c-comment"># Extract all model types including rseq + rrig</span>
-<span class="c-keyword">rsx</span> <span class="c-flag">--rpak</span> <span class="c-path">*.rpak</span> <span class="c-flag">--extract-type</span> rmdl,rseq,rrig \
-    <span class="c-flag">--output</span> <span class="c-path">./tf2_extracted/</span> <span class="c-flag">--zstd</span></pre>
-          </div>
-          <p>TF2 RPAKs may be compressed with ZSTD at block level or per-entry. RSX handles both modes automatically when <code>--zstd</code> is passed.</p>
+          <p>TF2 model assets are stored in RPAK files. Use <strong>Legion+</strong> or <strong>RSX</strong> to extract RMDLs and related files from the TF2 RPAK archives. TF2 RPAKs are located at <code>Titanfall2/r2/paks/Win64/</code>.</p>
+          <p>Unlike TF1, TF2 models are already in RMDL format — so there are no <code>.vvd</code>/<code>.vtx</code>/<code>.vvc</code> files. You just need the <code>.mdl</code> (and <code>.phy</code> for world models).</p>
+          <div class="info-box tip"><span class="info-label">Tip</span>TF2 is the best source for Apex porting. Skeletons, animation conventions, and material paths are closely aligned with Apex — you're upgrading the container format, not rebuilding the content.</div>
         </div>
       </div>
 
       <div class="step-block fade-in" id="tf2-s2">
-        <div class="step-block-header"><div class="step-index">02</div><h3>r2 vs r5 HEADER DIFFS</h3></div>
+        <div class="step-block-header"><div class="step-index">02</div><h3>CONVERT MODEL (SINGLE PASS)</h3></div>
         <div class="prose">
-          <p>TF2 and Apex share RMDL as the base format but diverge in critical header fields. rmdlconv specifically addresses these deltas:</p>
-          <div style="overflow-x:auto;">
-          <table class="format-table">
-            <thead><tr><th>Field</th><th>TF2 r2</th><th>Apex r5 Expected</th></tr></thead>
-            <tbody>
-              <tr><td>studiohdr2 flags</td><td>0x0040 set</td><td>Different flag mask</td></tr>
-              <tr><td>Max LOD slots</td><td>7</td><td>5 (truncate excess)</td></tr>
-              <tr><td>Hardware bone limit</td><td>53 per draw</td><td>53 (same)</td></tr>
-              <tr><td>Flex descriptor format</td><td>r2 morph</td><td>r5 morph (patched)</td></tr>
-              <tr><td>Extended header size</td><td>0x0D8</td><td>0x0E4</td></tr>
-            </tbody>
-          </table>
+          <p>TF2 models only need one rmdlconv pass — TF2 (v53) directly to Apex (v54). No intermediate step required.</p>
+          <div class="code-block">
+            <div class="code-header"><span class="code-lang">Shell</span><button class="code-copy" onclick="copyCode(this)">COPY</button></div>
+            <pre><span class="c-keyword">rmdlconv.exe</span> <span class="c-path">mymodel.mdl</span>
+<span class="c-comment"># Outputs: .rmdl + .vg (+ .phy if world model)</span>
+<span class="c-comment"># No mdl_new rename needed — output files have different extensions</span></pre>
           </div>
-          <div class="info-box tip"><span class="info-label">Tip</span>TF2 is the best source for Apex porting. Skeletons, LOD strategies, and material conventions were carried forward almost intact into Apex. You're upgrading the container, not rebuilding the content.</div>
         </div>
       </div>
 
       <div class="step-block fade-in" id="tf2-s3">
-        <div class="step-block-header"><div class="step-index">03</div><h3>RUN rmdlconv (r2 → r5)</h3></div>
+        <div class="step-block-header"><div class="step-index">03</div><h3>CONVERT ANIMATIONS</h3></div>
         <div class="prose">
+          <p>TF2 animation data is compatible enough with Apex that you can run R5-AnimConv directly on the TF2 <code>.mdl</code> without the Crowbar decompile/recompile step required for TF1.</p>
           <div class="code-block">
             <div class="code-header"><span class="code-lang">Shell</span><button class="code-copy" onclick="copyCode(this)">COPY</button></div>
-            <pre><span class="c-comment"># Single model, r2 → r5</span>
-<span class="c-keyword">rmdlconv</span> <span class="c-flag">-i</span> <span class="c-path">./tf2_extracted/models/weapons/hemlok.rmdl</span> \
-          <span class="c-flag">-o</span> <span class="c-path">./r5_models/weapons/hemlok.rmdl</span> \
-          <span class="c-flag">--from</span> r2 <span class="c-flag">--to</span> r5
-
-<span class="c-comment"># With LOD reduction to 5 max (Apex limit)</span>
-<span class="c-keyword">rmdlconv</span> <span class="c-flag">-i</span> model.rmdl <span class="c-flag">--from</span> r2 <span class="c-flag">--to</span> r5 <span class="c-flag">--max-lod</span> <span class="c-num">5</span>
-
-<span class="c-comment"># Batch directory conversion</span>
-<span class="c-keyword">rmdlconv</span> <span class="c-flag">--batch</span> <span class="c-path">./tf2_extracted/models/</span> \
-          <span class="c-flag">-o</span>     <span class="c-path">./r5_models/</span> \
-          <span class="c-flag">--from</span> r2 <span class="c-flag">--to</span> r5 \
-          <span class="c-flag">--max-lod</span> <span class="c-num">5</span> <span class="c-flag">--fix-materials</span></pre>
+            <pre><span class="c-keyword">R5-AnimConv.exe</span> <span class="c-path">"mymodel.mdl"</span> <span class="c-flag">-sp</span> <span class="c-string">animseq/weapons/myweapon</span> <span class="c-flag">-rp</span> <span class="c-string">animrig/weapons/myweapon</span>
+<span class="c-comment"># Outputs: .rrig + .rseq files</span>
+<span class="c-comment"># Console output includes the full arig JSON block for build.json — copy it</span></pre>
           </div>
-          <div class="info-box note"><span class="info-label">LOD Note</span>TF2 models with 6–7 LODs need the excess stripped. <code>--max-lod 5</code> drops the highest-numbered (lowest-detail) LODs. Validate visually — some models have important silhouette data in LOD4.</div>
         </div>
       </div>
 
       <div class="step-block fade-in" id="tf2-s4">
-        <div class="step-block-header"><div class="step-index">04</div><h3>ANIMATION SEQUENCES (RSEQ)</h3></div>
+        <div class="step-block-header"><div class="step-index">04</div><h3>TEXTURES &amp; VPK</h3></div>
         <div class="prose">
-          <p>TF2 animation data is in RSEQ files — same format as Apex, with minor version deltas. The most direct asset type to port from TF2.</p>
-          <div class="code-block">
-            <div class="code-header"><span class="code-lang">Shell — RSEQ conversion</span><button class="code-copy" onclick="copyCode(this)">COPY</button></div>
-            <pre><span class="c-comment"># Convert RSEQ alongside the model in one pass</span>
-<span class="c-keyword">rmdlconv</span> <span class="c-flag">-i</span> hemlok.rmdl \
-          <span class="c-flag">--rseq</span> <span class="c-path">./tf2_extracted/animations/hemlok_animations.rseq</span> \
-          <span class="c-flag">--from</span> r2 <span class="c-flag">--to</span> r5
-
-<span class="c-comment"># RSEQ bone indices are patched automatically when --bonemap is used</span></pre>
-          </div>
-          <p>TF2 viewmodel animations translate cleanly to Apex weapons when the skeleton is preserved. Third-person character animations may need minor frame timing adjustments for Apex's tick rate.</p>
+          <p>TF2 textures are also VMT/VTF and can be used directly via VPK the same way as TF1. Extract the textures from the TF2 RPAK using Legion+, stage them in the correct folder structure, write a manifest, and build with revpk.</p>
+          <p>Follow the same VPK build process as the TF1 pipeline — the manifest format and revpk command are identical. See <a href="#tf1-s4" style="color:var(--accent)">Step 4 of the TF1 pipeline</a> for the full details.</p>
+          <div class="info-box note"><span class="info-label">GUID Patch still required</span>Even though TF2 is a single pass, the <code>.rmdl</code> output will still have texture GUIDs set. Zero them out the same way as TF1 (see TF1 Step 5) if you're using VMT textures.</div>
         </div>
       </div>
 
       <div class="step-block fade-in" id="tf2-s5">
         <div class="step-block-header"><div class="step-index">05</div><h3>PACK + DEPLOY</h3></div>
         <div class="prose">
-          <p>TF2 material paths are already close to Apex conventions — typically needing only a prefix repath rather than a full rebuild.</p>
+          <p>Same as TF1 — assemble your assets folder, generate <code>build.json</code> with the <code>arig</code> entry from R5-AnimConv output and the <code>mdl_</code> entry for your model, run RePak.</p>
           <div class="code-block">
-            <div class="code-header"><span class="code-lang">JSON + Shell</span><button class="code-copy" onclick="copyCode(this)">COPY</button></div>
-            <pre><span class="c-comment">// tf2_hemlok_port.json</span>
-{
-  <span class="c-string">"name"</span>: <span class="c-string">"tf2_hemlok_port"</span>,
-  <span class="c-string">"version"</span>: <span class="c-num">8</span>,
-  <span class="c-string">"assets"</span>: [
-    { <span class="c-string">"$type"</span>: <span class="c-string">"rmdl"</span>, <span class="c-string">"path"</span>: <span class="c-string">"models/weapons/hemlok/hemlok.rmdl"</span> },
-    { <span class="c-string">"$type"</span>: <span class="c-string">"rseq"</span>, <span class="c-string">"path"</span>: <span class="c-string">"animseqs/weapons/hemlok/hemlok_anims.rseq"</span> }
-  ]
-}
-
-<span class="c-comment"># Build</span>
-<span class="c-keyword">RePak</span> <span class="c-path">./tf2_hemlok_port.json</span>
-<span class="c-comment"># Place .rpak in: ApexLegends/r5/mods/yourmod/paks/Win64/</span></pre>
+            <div class="code-header"><span class="code-lang">Shell</span><button class="code-copy" onclick="copyCode(this)">COPY</button></div>
+            <pre><span class="c-keyword">RePak.exe</span> <span class="c-path">build.json</span>
+<span class="c-comment"># Drop build.rpak + build.starpak + build.opt.starpak into:</span>
+<span class="c-comment"># R5SDK/mods/yourmod/paks/Win64/</span></pre>
           </div>
         </div>
       </div>
@@ -524,118 +584,74 @@
 <section id="source">
   <div class="section-label">04 — Pipeline C</div>
   <h2 style="color:var(--src)">SOURCE → APEX</h2>
-  <p class="section-intro">HL2, Portal, CS:S, TF2 (game), L4D and other Valve Source games use standard MDL/VVD/VTX. Longest pipeline — requires intermediate FBX export and skeleton retargeting.</p>
+  <p class="section-intro">HL2, Portal, CS:S, TF2 (game), L4D and other Valve Source games use standard MDL/VVD/VTX. Decompile with Crowbar, optionally work in Blender, recompile with studiomdl, then follow the same rmdlconv + R5-AnimConv + RePak path as TF1/TF2.</p>
 
   <div class="steps-container">
     <nav class="steps-nav">
       <a href="#src-s1" class="step-nav-item active"><span class="step-num">01</span>Decompile MDL</a>
-      <a href="#src-s2" class="step-nav-item"><span class="step-num">02</span>FBX Export</a>
-      <a href="#src-s3" class="step-nav-item"><span class="step-num">03</span>Skeleton Retarget</a>
-      <a href="#src-s4" class="step-nav-item"><span class="step-num">04</span>Material Rebuild</a>
-      <a href="#src-s5" class="step-nav-item"><span class="step-num">05</span>Compile + Pack</a>
+      <a href="#src-s2" class="step-nav-item"><span class="step-num">02</span>Blender (optional)</a>
+      <a href="#src-s3" class="step-nav-item"><span class="step-num">03</span>Recompile + Convert</a>
+      <a href="#src-s4" class="step-nav-item"><span class="step-num">04</span>Textures &amp; Materials</a>
+      <a href="#src-s5" class="step-nav-item"><span class="step-num">05</span>Pack + Deploy</a>
     </nav>
     <div class="steps-content">
 
       <div class="step-block fade-in" id="src-s1">
         <div class="step-block-header"><div class="step-index">01</div><h3>DECOMPILE WITH CROWBAR</h3></div>
         <div class="prose">
-          <p>Standard Source MDLs can't be fed directly into rmdlconv. Use <strong>Crowbar</strong> or <strong>mdldecompiler</strong> to extract SMD/QC source files first.</p>
+          <p>Use <strong>Crowbar</strong> to decompile the Source MDL to SMD/QC source files. This is the same first step as TF1 animations — use Crowbar's Decompile tab with default settings.</p>
           <div class="code-block">
-            <div class="code-header"><span class="code-lang">Shell — Crowbar CLI</span><button class="code-copy" onclick="copyCode(this)">COPY</button></div>
-            <pre><span class="c-keyword">CrowbarCommandLineApp</span> \
-    <span class="c-flag">-p</span> <span class="c-path">./source_game/models/props/barrel.mdl</span> \
-    <span class="c-flag">-o</span> <span class="c-path">./decompiled/barrel/</span>
-<span class="c-comment"># Produces: barrel.qc, barrel_reference.smd, barrel_phys.smd</span></pre>
+            <div class="code-header"><span class="code-lang">Crowbar</span><button class="code-copy" onclick="copyCode(this)">COPY</button></div>
+            <pre><span class="c-comment"># Crowbar Decompile tab → set MDL input → output to a decompiled/ folder</span>
+<span class="c-comment"># Produces: .qc, reference .smd, animation .smd files, .phy.smd</span></pre>
           </div>
-          <div class="info-box warn"><span class="info-label">Rig Complexity</span>Character rigs from standard Source (HL2 NPCs, TF2 characters) use ValveBiped which differs substantially from Apex's skeleton. Props and weapons are much easier — many have minimal bones or are effectively static meshes.</div>
+          <div class="info-box warn"><span class="info-label">Rig Complexity</span>Character rigs from standard Source (HL2 NPCs, TF2 characters) use ValveBiped which differs from Apex's skeleton. Props and weapons are much simpler — many are effectively static meshes with minimal bones.</div>
         </div>
       </div>
 
       <div class="step-block fade-in" id="src-s2">
-        <div class="step-block-header"><div class="step-index">02</div><h3>BLENDER FBX EXPORT</h3></div>
+        <div class="step-block-header"><div class="step-index">02</div><h3>BLENDER (OPTIONAL)</h3></div>
         <div class="prose">
-          <p>Import the SMD into Blender via <strong>Blender Source Tools</strong>, inspect the mesh and rig, then export as FBX for rmdlconv ingestion.</p>
-          <div class="code-block">
-            <div class="code-header"><span class="code-lang">Python — Blender batch SMD→FBX</span><button class="code-copy" onclick="copyCode(this)">COPY</button></div>
-            <pre><span class="c-keyword">import</span> bpy, os
-
-SMD_DIR = <span class="c-string">"/path/to/decompiled/"</span>
-OUT_DIR = <span class="c-string">"/path/to/fbx_out/"</span>
-
-<span class="c-keyword">for</span> f <span class="c-keyword">in</span> os.listdir(SMD_DIR):
-    <span class="c-keyword">if not</span> f.endswith(<span class="c-string">".smd"</span>): <span class="c-keyword">continue</span>
-    bpy.ops.wm.read_factory_settings(use_empty=<span class="c-keyword">True</span>)
-    bpy.ops.import_scene.smd(
-        filepath=os.path.join(SMD_DIR, f))
-    out = os.path.join(OUT_DIR, f.replace(<span class="c-string">".smd"</span>,<span class="c-string">".fbx"</span>))
-    bpy.ops.export_scene.fbx(
-        filepath=out,
-        use_mesh_modifiers=<span class="c-keyword">True</span>,
-        add_leaf_bones=<span class="c-keyword">False</span>,
-        bake_anim=<span class="c-keyword">False</span>
-    )</pre>
-          </div>
+          <p>If the model needs skeleton adjustments, mesh cleanup, or retargeting — import the SMD into Blender via <strong>Blender Source Tools</strong>, make your edits, then export back to SMD.</p>
+          <p>For simple props and weapons with no deformable rig, you can skip Blender entirely and go straight to recompile.</p>
+          <div class="info-box tip"><span class="info-label">Tip</span>If you're porting a weapon that you just want to use with its own animations (not paired with an Apex character), skeleton retargeting isn't needed at all. The rig ports as-is.</div>
         </div>
       </div>
 
       <div class="step-block fade-in" id="src-s3">
-        <div class="step-block-header"><div class="step-index">03</div><h3>SKELETON RETARGETING</h3></div>
+        <div class="step-block-header"><div class="step-index">03</div><h3>RECOMPILE + CONVERT</h3></div>
         <div class="prose">
-          <p>For characters, the ValveBiped skeleton must be retargeted to an Apex-compatible rig. rmdlconv accepts FBX with a <code>--skeleton-target</code> reference RMDL for automatic retargeting.</p>
+          <p>Recompile your SMDs using studiomdl (same as TF1 Step 3b), then run rmdlconv and R5-AnimConv on the output. From this point the pipeline is identical to TF1.</p>
           <div class="code-block">
             <div class="code-header"><span class="code-lang">Shell</span><button class="code-copy" onclick="copyCode(this)">COPY</button></div>
-            <pre><span class="c-comment"># Use an existing Apex model as the skeleton reference</span>
-<span class="c-keyword">rmdlconv</span> <span class="c-flag">--fbx</span>  <span class="c-path">./fbx_out/hl2_soldier.fbx</span> \
-          <span class="c-flag">--skel</span> <span class="c-path">./apex_reference/medium_pilot.rmdl</span> \
-          <span class="c-flag">-o</span>    <span class="c-path">./r5_models/hl2_soldier.rmdl</span> \
-          <span class="c-flag">--to</span>   r5 <span class="c-flag">--retarget</span>
+            <pre><span class="c-comment"># 1. Recompile SMDs → .mdl</span>
+<span class="c-keyword">studiomdl.exe</span> <span class="c-flag">-game</span> <span class="c-path">"..."</span> <span class="c-flag">-nop4</span> <span class="c-path">mymodel.qc</span>
 
-<span class="c-comment"># For props / static meshes with no deformable rig:</span>
-<span class="c-keyword">rmdlconv</span> <span class="c-flag">--fbx</span> <span class="c-path">./fbx_out/barrel.fbx</span> <span class="c-flag">--to</span> r5 <span class="c-flag">--static</span></pre>
+<span class="c-comment"># 2. Convert .mdl → Apex .rmdl (may need two passes depending on source game version)</span>
+<span class="c-keyword">rmdlconv.exe</span> <span class="c-path">mymodel.mdl</span>
+
+<span class="c-comment"># 3. Convert animations</span>
+<span class="c-keyword">R5-AnimConv.exe</span> <span class="c-path">mymodel.mdl</span> <span class="c-flag">-sp</span> <span class="c-string">animseq/...</span> <span class="c-flag">-rp</span> <span class="c-string">animrig/...</span></pre>
           </div>
-          <div class="info-box tip"><span class="info-label">Tip</span>Static props with no skeleton are the easiest Source assets to port. <code>--static</code> skips all bone processing — ideal for environment props, crates, and vehicles.</div>
         </div>
       </div>
 
       <div class="step-block fade-in" id="src-s4">
-        <div class="step-block-header"><div class="step-index">04</div><h3>MATERIAL REBUILD</h3></div>
+        <div class="step-block-header"><div class="step-index">04</div><h3>TEXTURES &amp; MATERIALS</h3></div>
         <div class="prose">
-          <p>Source VMT materials are incompatible with Apex's RPAK material system. New materials must be authored using Apex texture conventions: <strong>col</strong> (albedo), <strong>nml</strong> (normal), <strong>spc</strong> (specular), <strong>gls</strong> (gloss).</p>
-          <div class="code-block">
-            <div class="code-header"><span class="code-lang">JSON — Apex material def</span><button class="code-copy" onclick="copyCode(this)">COPY</button></div>
-            <pre">{
-  <span class="c-string">"$type"</span>: <span class="c-string">"material"</span>,
-  <span class="c-string">"path"</span>: <span class="c-string">"material/models/props/barrel/barrel_col"</span>,
-  <span class="c-string">"settings"</span>: {
-    <span class="c-string">"surface"</span>: <span class="c-string">"metal"</span>,
-    <span class="c-string">"shader"</span>:  <span class="c-string">"skn_r5"</span>,
-    <span class="c-string">"textures"</span>: {
-      <span class="c-string">"col"</span>: <span class="c-string">"texture/models/props/barrel/barrel_col"</span>,
-      <span class="c-string">"nml"</span>: <span class="c-string">"texture/models/props/barrel/barrel_nml"</span>,
-      <span class="c-string">"spc"</span>: <span class="c-string">"texture/models/props/barrel/barrel_spc"</span>
-    }
-  }
-}</pre>
-          </div>
-          <p>Convert VTF textures to DXT1/DXT5 DDS, or use RePak's <code>txtr</code> asset type which handles conversion from standard image formats (PNG/TGA) directly.</p>
+          <p>Standard Source VMTs and VTFs work the same way as TF1/TF2 — R5Reloaded supports them natively. Stage them via VPK using the same revpk build process. Make sure the material path in the VMT matches what the RMDL expects.</p>
+          <p>Don't forget to zero the RMDL texture GUIDs (Step 5 of the TF1 pipeline) for VMT fallback to work.</p>
         </div>
       </div>
 
       <div class="step-block fade-in" id="src-s5">
-        <div class="step-block-header"><div class="step-index">05</div><h3>COMPILE TO RMDL + PACK</h3></div>
+        <div class="step-block-header"><div class="step-index">05</div><h3>PACK + DEPLOY</h3></div>
         <div class="prose">
+          <p>Same as TF1 Step 6 — assemble assets folder, write <code>build.json</code>, run RePak, deploy to R5SDK mod directory.</p>
           <div class="code-block">
-            <div class="code-header"><span class="code-lang">Shell — full pipeline</span><button class="code-copy" onclick="copyCode(this)">COPY</button></div>
-            <pre><span class="c-comment"># 1. FBX → RMDL (static prop)</span>
-<span class="c-keyword">rmdlconv</span> <span class="c-flag">--fbx</span> barrel.fbx <span class="c-flag">--to</span> r5 <span class="c-flag">--static</span> \
-          <span class="c-flag">-o</span> <span class="c-path">./r5_models/models/props/barrel/barrel.rmdl</span>
-
-<span class="c-comment"># 2. Pack everything into RPAK</span>
-<span class="c-keyword">RePak</span> <span class="c-path">./barrel_port.json</span>
-
-<span class="c-comment"># 3. Deploy to R5SDK mod directory</span>
-<span class="c-keyword">cp</span> barrel_port.rpak <span class="c-path">"$R5SDK_MOD_DIR/paks/Win64/"</span>
-<span class="c-keyword">cp</span> barrel_port.starpak <span class="c-path">"$R5SDK_MOD_DIR/paks/Win64/"</span></pre>
+            <div class="code-header"><span class="code-lang">Shell</span><button class="code-copy" onclick="copyCode(this)">COPY</button></div>
+            <pre><span class="c-keyword">RePak.exe</span> <span class="c-path">build.json</span>
+<span class="c-comment"># Drop .rpak + .starpak + .opt.starpak into R5SDK/mods/yourmod/paks/Win64/</span></pre>
           </div>
         </div>
       </div>
@@ -649,120 +665,67 @@ OUT_DIR = <span class="c-string">"/path/to/fbx_out/"</span>
 <!-- BLENDER → APEX -->
 <section id="blender">
   <div class="section-label">05 — Pipeline D</div>
-  <h2 style="--card-color:#2ecc71">Blender → APEX</h2>
-  <p class="section-intro">Other Game Model format like FBX, OBJ etc. Longest pipeline — possible skeleton retargeting, and full material rebuild.</p>
+  <h2>Blender → APEX</h2>
+  <p class="section-intro">For models from non-Source games (FBX, OBJ, SEModel etc.) — import into Blender, rig and clean up the mesh, export to SMD, then follow the same recompile + rmdlconv + R5-AnimConv + RePak path. Full material rebuild required.</p>
 
   <div class="steps-container">
     <nav class="steps-nav">
-      <a href="#src-b1" class="step-nav-item active"><span class="step-num">01</span>Export Model</a>
-      <a href="#src-b2" class="step-nav-item"><span class="step-num">02</span>FBX Export</a>
-      <a href="#src-b3" class="step-nav-item"><span class="step-num">03</span>Skeleton Retarget</a>
-      <a href="#src-b4" class="step-nav-item"><span class="step-num">04</span>Material Rebuild</a>
-      <a href="#src-b5" class="step-nav-item"><span class="step-num">05</span>Compile + Pack</a>
+      <a href="#src-b1" class="step-nav-item active"><span class="step-num">01</span>Import to Blender</a>
+      <a href="#src-b2" class="step-nav-item"><span class="step-num">02</span>Rig &amp; Cleanup</a>
+      <a href="#src-b3" class="step-nav-item"><span class="step-num">03</span>Export SMD</a>
+      <a href="#src-b4" class="step-nav-item"><span class="step-num">04</span>Compile + Convert</a>
+      <a href="#src-b5" class="step-nav-item"><span class="step-num">05</span>Materials + Pack</a>
     </nav>
     <div class="steps-content">
 
       <div class="step-block fade-in" id="src-b1">
-        <div class="step-block-header"><div class="step-index">01</div><h3>EXPORTING MODELS FROM OTHER GAMES</h3></div>
+        <div class="step-block-header"><div class="step-index">01</div><h3>IMPORT TO BLENDER</h3></div>
         <div class="prose">
-          <p>Standard Source MDLs can't be fed directly into rmdlconv. Use <strong>Crowbar</strong> or <strong>mdldecompiler</strong> to extract SMD/QC source files first.</p>
-          <div class="code-block">
-            <div class="code-header"><span class="code-lang">Shell — Crowbar CLI</span><button class="code-copy" onclick="copyCode(this)">COPY</button></div>
-            <pre><span class="c-keyword">CrowbarCommandLineApp</span> \
-    <span class="c-flag">-p</span> <span class="c-path">./source_game/models/props/barrel.mdl</span> \
-    <span class="c-flag">-o</span> <span class="c-path">./decompiled/barrel/</span>
-<span class="c-comment"># Produces: barrel.qc, barrel_reference.smd, barrel_phys.smd</span></pre>
-          </div>
-          <div class="info-box warn"><span class="info-label">Rig Complexity</span>Character rigs from standard Source (HL2 NPCs, TF2 characters) use ValveBiped which differs substantially from Apex's skeleton. Props and weapons are much easier — many have minimal bones or are effectively static meshes.</div>
+          <p>Use whatever importer is appropriate for your source format — Blender natively supports FBX and OBJ. For game-specific formats like SEModel (Call of Duty), use community importers such as <strong>io_scene_semodel</strong>.</p>
+          <div class="info-box tip"><span class="info-label">Tip</span>Check the scale on import — many game exporters use centimetre units while Blender defaults to metres. Models may appear enormous or tiny. Set scale to 0.01 on FBX import if needed.</div>
         </div>
       </div>
 
       <div class="step-block fade-in" id="src-b2">
-        <div class="step-block-header"><div class="step-index">02</div><h3>BLENDER FBX EXPORT</h3></div>
+        <div class="step-block-header"><div class="step-index">02</div><h3>RIG &amp; CLEANUP</h3></div>
         <div class="prose">
-          <p>Import the SMD into Blender via <strong>Blender Source Tools</strong>, inspect the mesh and rig, then export as FBX for rmdlconv ingestion.</p>
-          <div class="code-block">
-            <div class="code-header"><span class="code-lang">Python — Blender batch SMD→FBX</span><button class="code-copy" onclick="copyCode(this)">COPY</button></div>
-            <pre><span class="c-keyword">import</span> bpy, os
-
-SMD_DIR = <span class="c-string">"/path/to/decompiled/"</span>
-OUT_DIR = <span class="c-string">"/path/to/fbx_out/"</span>
-
-<span class="c-keyword">for</span> f <span class="c-keyword">in</span> os.listdir(SMD_DIR):
-    <span class="c-keyword">if not</span> f.endswith(<span class="c-string">".smd"</span>): <span class="c-keyword">continue</span>
-    bpy.ops.wm.read_factory_settings(use_empty=<span class="c-keyword">True</span>)
-    bpy.ops.import_scene.smd(
-        filepath=os.path.join(SMD_DIR, f))
-    out = os.path.join(OUT_DIR, f.replace(<span class="c-string">".smd"</span>,<span class="c-string">".fbx"</span>))
-    bpy.ops.export_scene.fbx(
-        filepath=out,
-        use_mesh_modifiers=<span class="c-keyword">True</span>,
-        add_leaf_bones=<span class="c-keyword">False</span>,
-        bake_anim=<span class="c-keyword">False</span>
-    )</pre>
-          </div>
+          <p>Clean up the mesh as needed — remove duplicate vertices, fix normals, check for inverted faces. If the model has no skeleton (static prop), you can skip rigging entirely. If it has a skeleton and you want it to work with Apex character models, you'll need to retarget the rig to an Apex-compatible skeleton.</p>
+          <p>For standalone use (the model uses its own rig, not paired with an Apex character), no retargeting is needed.</p>
         </div>
       </div>
 
       <div class="step-block fade-in" id="src-b3">
-        <div class="step-block-header"><div class="step-index">03</div><h3>SKELETON RETARGETING</h3></div>
+        <div class="step-block-header"><div class="step-index">03</div><h3>EXPORT SMD</h3></div>
         <div class="prose">
-          <p>For characters, the ValveBiped skeleton must be retargeted to an Apex-compatible rig. rmdlconv accepts FBX with a <code>--skeleton-target</code> reference RMDL for automatic retargeting.</p>
+          <p>Install <strong>Blender Source Tools</strong> to get SMD export support. Export the mesh and skeleton as SMD, then write a basic <code>.qc</code> file for studiomdl.</p>
           <div class="code-block">
-            <div class="code-header"><span class="code-lang">Shell</span><button class="code-copy" onclick="copyCode(this)">COPY</button></div>
-            <pre><span class="c-comment"># Use an existing Apex model as the skeleton reference</span>
-<span class="c-keyword">rmdlconv</span> <span class="c-flag">--fbx</span>  <span class="c-path">./fbx_out/hl2_soldier.fbx</span> \
-          <span class="c-flag">--skel</span> <span class="c-path">./apex_reference/medium_pilot.rmdl</span> \
-          <span class="c-flag">-o</span>    <span class="c-path">./r5_models/hl2_soldier.rmdl</span> \
-          <span class="c-flag">--to</span>   r5 <span class="c-flag">--retarget</span>
-
-<span class="c-comment"># For props / static meshes with no deformable rig:</span>
-<span class="c-keyword">rmdlconv</span> <span class="c-flag">--fbx</span> <span class="c-path">./fbx_out/barrel.fbx</span> <span class="c-flag">--to</span> r5 <span class="c-flag">--static</span></pre>
+            <div class="code-header"><span class="code-lang">QC — basic template</span><button class="code-copy" onclick="copyCode(this)">COPY</button></div>
+            <pre>$modelname "weapons/mymodel/mymodel.mdl"
+$body "Body" "mymodel_reference.smd"
+$cdmaterials "models/weapons/mymodel/"
+$sequence idle "mymodel_idle.smd" fps 30</pre>
           </div>
-          <div class="info-box tip"><span class="info-label">Tip</span>Static props with no skeleton are the easiest Source assets to port. <code>--static</code> skips all bone processing — ideal for environment props, crates, and vehicles.</div>
         </div>
       </div>
 
       <div class="step-block fade-in" id="src-b4">
-        <div class="step-block-header"><div class="step-index">04</div><h3>MATERIAL REBUILD</h3></div>
+        <div class="step-block-header"><div class="step-index">04</div><h3>COMPILE + CONVERT</h3></div>
         <div class="prose">
-          <p>Source VMT materials are incompatible with Apex's RPAK material system. New materials must be authored using Apex texture conventions: <strong>col</strong> (albedo), <strong>nml</strong> (normal), <strong>spc</strong> (specular), <strong>gls</strong> (gloss).</p>
+          <p>Compile the SMD with studiomdl, then run rmdlconv and R5-AnimConv — same as TF1 Steps 3b and 3c.</p>
           <div class="code-block">
-            <div class="code-header"><span class="code-lang">JSON — Apex material def</span><button class="code-copy" onclick="copyCode(this)">COPY</button></div>
-            <pre">{
-  <span class="c-string">"$type"</span>: <span class="c-string">"material"</span>,
-  <span class="c-string">"path"</span>: <span class="c-string">"material/models/props/barrel/barrel_col"</span>,
-  <span class="c-string">"settings"</span>: {
-    <span class="c-string">"surface"</span>: <span class="c-string">"metal"</span>,
-    <span class="c-string">"shader"</span>:  <span class="c-string">"skn_r5"</span>,
-    <span class="c-string">"textures"</span>: {
-      <span class="c-string">"col"</span>: <span class="c-string">"texture/models/props/barrel/barrel_col"</span>,
-      <span class="c-string">"nml"</span>: <span class="c-string">"texture/models/props/barrel/barrel_nml"</span>,
-      <span class="c-string">"spc"</span>: <span class="c-string">"texture/models/props/barrel/barrel_spc"</span>
-    }
-  }
-}</pre>
+            <div class="code-header"><span class="code-lang">Shell</span><button class="code-copy" onclick="copyCode(this)">COPY</button></div>
+            <pre><span class="c-keyword">studiomdl.exe</span> <span class="c-flag">-game</span> <span class="c-path">"..."</span> <span class="c-flag">-nop4</span> <span class="c-path">mymodel.qc</span>
+<span class="c-keyword">rmdlconv.exe</span> <span class="c-path">mymodel.mdl</span>
+<span class="c-keyword">R5-AnimConv.exe</span> <span class="c-path">mymodel.mdl</span> <span class="c-flag">-sp</span> <span class="c-string">animseq/...</span> <span class="c-flag">-rp</span> <span class="c-string">animrig/...</span></pre>
           </div>
-          <p>Convert VTF textures to DXT1/DXT5 DDS, or use RePak's <code>txtr</code> asset type which handles conversion from standard image formats (PNG/TGA) directly.</p>
         </div>
       </div>
 
       <div class="step-block fade-in" id="src-b5">
-        <div class="step-block-header"><div class="step-index">05</div><h3>COMPILE TO RMDL + PACK</h3></div>
+        <div class="step-block-header"><div class="step-index">05</div><h3>MATERIALS + PACK</h3></div>
         <div class="prose">
-          <div class="code-block">
-            <div class="code-header"><span class="code-lang">Shell — full pipeline</span><button class="code-copy" onclick="copyCode(this)">COPY</button></div>
-            <pre><span class="c-comment"># 1. FBX → RMDL (static prop)</span>
-<span class="c-keyword">rmdlconv</span> <span class="c-flag">--fbx</span> barrel.fbx <span class="c-flag">--to</span> r5 <span class="c-flag">--static</span> \
-          <span class="c-flag">-o</span> <span class="c-path">./r5_models/models/props/barrel/barrel.rmdl</span>
-
-<span class="c-comment"># 2. Pack everything into RPAK</span>
-<span class="c-keyword">RePak</span> <span class="c-path">./barrel_port.json</span>
-
-<span class="c-comment"># 3. Deploy to R5SDK mod directory</span>
-<span class="c-keyword">cp</span> barrel_port.rpak <span class="c-path">"$R5SDK_MOD_DIR/paks/Win64/"</span>
-<span class="c-keyword">cp</span> barrel_port.starpak <span class="c-path">"$R5SDK_MOD_DIR/paks/Win64/"</span></pre>
-          </div>
+          <p>For non-Source assets you'll need to create VMT files manually pointing to your textures. Convert textures to VTF format using <strong>VTFEdit</strong> or similar, write VMTs, stage via VPK, then pack with RePak as normal.</p>
+          <div class="info-box warn"><span class="info-label">Full rebuild required</span>Unlike TF1/TF2 where you can reuse the original VMTs, assets from other games have no VMTs at all. You need to create them from scratch — one VMT per material, referencing your converted VTF textures.</div>
         </div>
       </div>
 
@@ -772,10 +735,9 @@ OUT_DIR = <span class="c-string">"/path/to/fbx_out/"</span>
 
 <div class="divider"></div>
 
-
 <!-- TOOLS -->
 <section id="tools">
-  <div class="section-label">05 — Tools</div>
+  <div class="section-label">06 — Tools</div>
   <h2>REQUIRED TOOLCHAIN</h2>
   <p class="section-intro">Every tool in the model porting pipeline. Set these up before starting any conversion work.</p>
 
@@ -783,37 +745,49 @@ OUT_DIR = <span class="c-string">"/path/to/fbx_out/"</span>
     <div class="tool-card">
       <span class="tool-icon">⚙️</span>
       <div class="tool-name">rmdlconv</div>
-      <div class="tool-purpose">Core converter. Handles r1 MDL/VVD/VTX → r5 RMDL, r2 RMDL → r5 RMDL, PHY physics conversion, skeleton remapping, and LOD reduction. Primary tool for all three pipelines.</div>
+      <div class="tool-purpose">Core model converter. Handles TF1 MDL/VVD/VTX → TF2 MDL (pass 1), then TF2 MDL → Apex RMDL (pass 2). For TF2 assets, a single pass suffices. Usage: drag .mdl onto the exe, or <code>rmdlconv.exe model.mdl</code>.</div>
       <a href="https://github.com/r-ex/rmdlconv" class="tool-link" target="_blank">github.com/r-ex/rmdlconv →</a>
+    </div>
+    <div class="tool-card">
+      <span class="tool-icon">🎬</span>
+      <div class="tool-name">R5-AnimConv</div>
+      <div class="tool-purpose">Converts compiled .mdl animation data into Apex .rseq sequences and .rrig rigs. Run it on the recompiled .mdl with -sp (sequence path) and -rp (rig path) flags. Also outputs the RePak JSON arig entry block directly.</div>
+      <a href="https://github.com/r-ex/r5_animconv" class="tool-link" target="_blank">github.com/r-ex/r5_animconv →</a>
     </div>
     <div class="tool-card">
       <span class="tool-icon">📦</span>
       <div class="tool-name">RePak</div>
-      <div class="tool-purpose">RPAK asset packer for R5Reloaded. Takes JSON asset manifests and builds the final .rpak + .starpak files for deployment into Apex via R5SDK. Handles models, materials, and textures.</div>
+      <div class="tool-purpose">RPAK asset packer for R5Reloaded. Takes a build.json manifest and builds the final .rpak + .starpak + .opt.starpak files. Handles model (mdl_) and animation rig (arig) asset types. Usage: <code>RePak.exe build.json</code>.</div>
       <a href="https://github.com/r-ex/RePak" class="tool-link" target="_blank">github.com/r-ex/RePak →</a>
     </div>
     <div class="tool-card">
-      <span class="tool-icon">🔍</span>
-      <div class="tool-name">RSX</div>
-      <div class="tool-purpose">reSource Xtractor — GUI and CLI tool for extracting assets from TF1 VPKs and TF2/Apex RPAKs. Supports ZSTD-compressed archives. Cross-platform (Windows + macOS CMake build available).</div>
-      <a href="https://github.com/r-ex/rsx" class="tool-link" target="_blank">github.com/r-ex/rsx →</a>
+      <span class="tool-icon">📁</span>
+      <div class="tool-name">Titanfall VPK Tool</div>
+      <div class="tool-purpose">GUI tool for browsing and extracting files from Respawn's modified VPK format (used in TF1). Supports the non-standard Respawn VPK that other tools struggle with. Open the _dir VPK to browse the full asset tree.</div>
+      <a href="#" class="tool-link">Community tool</a>
     </div>
     <div class="tool-card">
-      <span class="tool-icon">🛠️</span>
-      <div class="tool-name">R5SDK</div>
-      <div class="tool-purpose">Apex Legends mod SDK (R5Reloaded). The target runtime that loads custom RPAKs. Required for testing ported models in-engine and for Squirrel scripting to reference new asset paths.</div>
-      <a href="https://github.com/r-ex/r5sdk" class="tool-link" target="_blank">github.com/r-ex/r5sdk →</a>
+      <span class="tool-icon">🔧</span>
+      <div class="tool-name">revpk</div>
+      <div class="tool-purpose">Builds and extracts Respawn VPK archives. Used to package textures (VMT + VTF) into the VPK format required for R5Reloaded mods. Command: <code>revpk -pack english client watery_common "vpk/" "build/"</code>.</div>
+      <a href="https://github.com/r-ex/revpk" class="tool-link" target="_blank">github.com/r-ex/revpk →</a>
     </div>
     <div class="tool-card">
       <span class="tool-icon">🦅</span>
       <div class="tool-name">Crowbar</div>
-      <div class="tool-purpose">MDL decompiler for standard Valve Source Engine models. Required for the Source → Apex pipeline to extract SMD and QC files from HL2, Portal, CS:S, and TF2 game models.</div>
+      <div class="tool-purpose">MDL decompiler for Source Engine models. Required for the TF1 animation pipeline (decompile TF1 .mdl to SMDs) and for porting Source Engine game assets. Use version 0.74 for best TF1 compatibility.</div>
       <a href="https://github.com/ZeqMacaw/Crowbar" class="tool-link" target="_blank">github.com/ZeqMacaw/Crowbar →</a>
+    </div>
+    <div class="tool-card">
+      <span class="tool-icon">🔍</span>
+      <div class="tool-name">Legion+ / RSX</div>
+      <div class="tool-purpose">Asset extractors for TF2 and Apex RPAK files. Legion+ is the recommended GUI tool. RSX is a cross-platform CLI alternative with ZSTD support. Use either to extract RMDLs, textures, and animations from TF2 RPAKs.</div>
+      <a href="https://github.com/r-ex/LegionPlus" class="tool-link" target="_blank">github.com/r-ex/LegionPlus →</a>
     </div>
     <div class="tool-card">
       <span class="tool-icon">🎨</span>
       <div class="tool-name">Blender + Source Tools</div>
-      <div class="tool-purpose">3D pipeline for the Source → Apex path. Blender Source Tools enables SMD/DMX import. Export FBX for rmdlconv. Also useful for manual skeleton editing and mesh cleanup before conversion.</div>
+      <div class="tool-purpose">3D pipeline for mesh cleanup, skeleton editing, and SMD export. Blender Source Tools adds SMD/DMX import/export support. Required for Source → Apex and Blender → Apex pipelines.</div>
       <a href="https://steamreview.org/BlenderSourceTools/" class="tool-link" target="_blank">BlenderSourceTools →</a>
     </div>
   </div>
@@ -823,42 +797,42 @@ OUT_DIR = <span class="c-string">"/path/to/fbx_out/"</span>
 
 <!-- TROUBLESHOOT -->
 <section id="troubleshoot">
-  <div class="section-label">06 — Troubleshooting</div>
+  <div class="section-label">07 — Troubleshooting</div>
   <h2>COMMON ISSUES</h2>
-  <p class="section-intro">Runtime crashes, visual glitches, and conversion failures — and how to resolve them.</p>
+  <p class="section-intro">Runtime crashes, missing textures, and conversion failures — and how to fix them.</p>
 
   <div class="trouble-list fade-in">
     <div class="trouble-item">
-      <div class="trouble-q" onclick="toggleTrouble(this)">Apex crashes immediately when model is loaded or spawned</div>
-      <div class="trouble-a"><p>Most likely cause: <strong>PHY size field mismatch</strong> or <strong>invalid RMDL extended header</strong>. Check the callstack — if it contains <code>phys_InitModelBounds</code>, the PHY is corrupted. Re-run rmdlconv with <code>--phy-fix-size</code>.</p><p>If the crash is in <code>CModelLoader::LoadModel</code>, the RMDL header itself is wrong. Verify studiohdr version is <code>54</code> and extended header size is <code>0x0E4</code>.</p></div>
+      <div class="trouble-q" onclick="toggleTrouble(this)">Model loads but textures are missing / appears white or black</div>
+      <div class="trouble-a"><p>The texture GUIDs in the RMDL haven't been zeroed. When using VMT textures, the engine needs GUIDs to be all-zero to trigger the VMT path fallback. Run the <code>zero_guids.py</code> script on your <code>.rmdl</code> before packing with RePak. See TF1 Step 5 for the full details.</p></div>
     </div>
     <div class="trouble-item">
-      <div class="trouble-q" onclick="toggleTrouble(this)">Model appears inside-out or normals are flipped</div>
-      <div class="trouble-a"><p>TF1/Source MDL winding order is sometimes inverted relative to r5. Pass <code>--flip-normals</code> to rmdlconv, or in Blender select all faces and use <strong>Mesh → Normals → Flip</strong> before exporting FBX. Common on props originally authored for DX9.</p></div>
+      <div class="trouble-q" onclick="toggleTrouble(this)">rmdlconv outputs a .mdl_new but I'm not sure what to do with it</div>
+      <div class="trouble-a"><p>That's the converted model — rename it to <code>.mdl</code>. Delete the original <code>.mdl</code> from that folder first, then rename <code>.mdl_new</code> → <code>.mdl</code>. It's a good idea to keep your originals in a separate folder so you can always restart from a clean state without re-extracting from the VPK.</p></div>
     </div>
     <div class="trouble-item">
-      <div class="trouble-q" onclick="toggleTrouble(this)">Skeleton deforms incorrectly / mesh explodes during animation</div>
-      <div class="trouble-a"><p>Bone remap is incomplete. Ensure your remap JSON covers <strong>all</strong> bones in the source skeleton. Unmapped bones default to identity transform, causing vertices to fly to the origin. Use rmdlconv's <code>--dump-bones</code> flag on both source and target to diff the bone lists.</p></div>
+      <div class="trouble-q" onclick="toggleTrouble(this)">R5-AnimConv produces no output / errors immediately</div>
+      <div class="trouble-a"><p>R5-AnimConv needs a <strong>recompiled</strong> <code>.mdl</code> — not the rmdlconv output and not the raw TF1 <code>.mdl</code>. You must decompile the original TF1 <code>.mdl</code> with Crowbar first, then recompile the SMDs with studiomdl to get a fresh <code>.mdl</code> that R5-AnimConv can process. Also make sure R5-AnimConv is run from the same directory as the <code>.mdl</code>.</p></div>
     </div>
     <div class="trouble-item">
-      <div class="trouble-q" onclick="toggleTrouble(this)">Materials appear black or model has no textures</div>
-      <div class="trouble-a"><p>The material asset path referenced in the RMDL doesn't exist in the loaded RPAK. Verify the path string in your converted RMDL exactly matches the <code>"path"</code> field in your RePak JSON — these are case-sensitive on Linux. Also check that the <code>.starpak</code> streaming file is present alongside the <code>.rpak</code>.</p></div>
+      <div class="trouble-q" onclick="toggleTrouble(this)">Apex crashes when loading the model</div>
+      <div class="trouble-a"><p>Most likely the <code>.rmdl</code> or <code>.vg</code> is missing or corrupt, or the asset paths in <code>build.json</code> don't match the actual file locations in the assets folder. Double check: (1) both <code>.rmdl</code> and <code>.vg</code> are in the same assets subfolder, (2) the <code>_path</code> in the <code>mdl_</code> entry matches exactly, (3) the <code>$animrigs</code> path matches the <code>arig</code> <code>_path</code>.</p></div>
     </div>
     <div class="trouble-item">
-      <div class="trouble-q" onclick="toggleTrouble(this)">RSX fails to extract with "decompression error"</div>
-      <div class="trouble-a"><p>The RPAK uses ZSTD compression. Ensure RSX was built with <code>-DUSE_ZSTD=ON</code> in CMake, and pass <code>--zstd</code> explicitly if auto-detection isn't working. Some TF2 RPAKs use per-entry ZSTD — older RSX builds only handled block-level compression.</p></div>
+      <div class="trouble-q" onclick="toggleTrouble(this)">Model appears but has no animations</div>
+      <div class="trouble-a"><p>Check that all <code>.rseq</code> files are listed in the <code>$sequences</code> array in your <code>build.json</code> <code>arig</code> entry. R5-AnimConv prints the full list to console when it runs — copy that output directly into your JSON. Also verify the <code>animseq/</code> folder structure inside <code>assets/</code> matches the paths in the JSON.</p></div>
     </div>
     <div class="trouble-item">
-      <div class="trouble-q" onclick="toggleTrouble(this)">rmdlconv outputs "LOD count exceeds r5 maximum"</div>
-      <div class="trouble-a"><p>TF1/TF2 models can have up to 7–8 LOD levels. Apex's r5 RMDL supports max 5. Add <code>--max-lod 5</code> to your command. The converter drops the highest-numbered (lowest-poly) LOD slots. Use <code>--lod-select 0,1,2,3,4</code> for manual control over which indices to keep.</p></div>
+      <div class="trouble-q" onclick="toggleTrouble(this)">revpk build fails or produces an empty VPK</div>
+      <div class="trouble-a"><p>Check your manifest file (<code>englishclient_watery_common.txt</code>) — every path listed must exist in the staging folder relative to the vpk root. Paths use backslashes in the manifest but the actual folder structure should match. Run revpk from the folder containing the manifest and vpk/ staging directory.</p></div>
     </div>
     <div class="trouble-item">
-      <div class="trouble-q" onclick="toggleTrouble(this)">VVD size field warning during conversion</div>
-      <div class="trouble-a"><p>A known bug in older rmdlconv builds where <code>vertexDataSize</code> was calculated using source-format vertex size instead of target-format. Update to the latest build. The field must equal <code>numVertices × sizeof(mstudiovertex_r5_t)</code>.</p></div>
+      <div class="trouble-q" onclick="toggleTrouble(this)">TF1 model has two rmdlconv passes but TF2 only needs one — why?</div>
+      <div class="trouble-a"><p>TF1 uses an older MDL format (v52 with VVD/VTX/VVC) that rmdlconv first converts to TF2's MDL (v53) format, and then a second pass converts v53 → Apex RMDL (v54). TF2 is already at v53 so only the second pass is needed. The two-step process for TF1 is intentional and normal.</p></div>
     </div>
     <div class="trouble-item">
-      <div class="trouble-q" onclick="toggleTrouble(this)">RePak builds successfully but model doesn't appear in-game</div>
-      <div class="trouble-a"><p>Check R5SDK's mod loading output to confirm the RPAK is actually being loaded. If it is, the asset path referenced in your Squirrel script doesn't match what's in the RPAK — paths are case-sensitive and must not have a leading slash. Use R5SDK's asset browser to confirm registered paths after RPAK load.</p></div>
+      <div class="trouble-q" onclick="toggleTrouble(this)">World model (.phy) doesn't work correctly in Apex</div>
+      <div class="trouble-a"><p>PHY conversion for TF1 and TF2 world models has known issues in some rmdlconv builds — the PHY offset calculation has historically had bugs. Make sure you're on the latest build of rmdlconv. If physics are still wrong, the model may work fine visually but collisions will be off until a fixed build is available.</p></div>
     </div>
   </div>
 </section>
@@ -873,8 +847,8 @@ OUT_DIR = <span class="c-string">"/path/to/fbx_out/"</span>
   <div class="footer-links">
     <a href="https://github.com/r-ex/rmdlconv" target="_blank">rmdlconv</a>
     <a href="https://github.com/r-ex/RePak" target="_blank">RePak</a>
-    <a href="https://github.com/r-ex/rsx" target="_blank">RSX</a>
-    <a href="https://github.com/r-ex/r5sdk" target="_blank">R5SDK</a>
+    <a href="https://github.com/r-ex/revpk" target="_blank">revpk</a>
+    <a href="https://github.com/r-ex/LegionPlus" target="_blank">Legion+</a>
     <a href="https://github.com/ZeqMacaw/Crowbar" target="_blank">Crowbar</a>
   </div>
 </footer>
