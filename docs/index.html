@@ -36,7 +36,8 @@
   .nav-links{display:flex;gap:30px;list-style:none;}
   .nav-links a{font-family:'Share Tech Mono',monospace;font-size:11px;letter-spacing:2px;text-transform:uppercase;color:var(--text-dim);text-decoration:none;transition:color 0.2s;}
   .nav-links a:hover{color:var(--accent);}
-  .nav-badge{font-family:'Share Tech Mono',monospace;font-size:10px;color:var(--accent);border:1px solid var(--accent);padding:3px 10px;letter-spacing:2px;opacity:0.7;}
+  .nav-badge{font-family:'Share Tech Mono',monospace;font-size:10px;color:var(--accent);border:1px solid var(--accent);padding:3px 10px;letter-spacing:2px;opacity:0.7;text-decoration:none;transition:opacity 0.2s;}
+  .nav-badge:hover{opacity:1;}
   .hero{position:relative;min-height:100vh;display:flex;flex-direction:column;justify-content:center;padding:100px 80px 80px;overflow:hidden;z-index:1;}
   .hero-orb{position:absolute;width:600px;height:600px;border-radius:50%;background:radial-gradient(circle,rgba(0,229,255,0.06) 0%,transparent 70%);top:50%;right:-100px;transform:translateY(-50%);pointer-events:none;animation:pulse 6s ease-in-out infinite;}
   .hero-orb2{position:absolute;width:400px;height:400px;border-radius:50%;background:radial-gradient(circle,rgba(255,107,53,0.05) 0%,transparent 70%);bottom:-100px;left:100px;pointer-events:none;animation:pulse 8s ease-in-out infinite reverse;}
@@ -159,7 +160,7 @@
     <li><a href="#tools">Tools</a></li>
     <li><a href="#troubleshoot">Troubleshoot</a></li>
   </ul>
-  <div class="nav-badge">MODEL PORTING</div>
+  <a href="https://github.com/WateryContinent" target="_blank" class="nav-badge">GITHUB</a>
 </nav>
 
 <!-- HERO -->
@@ -204,7 +205,7 @@
       <div class="card-arrow">↓</div>
       <div class="card-dest">Target → Apex Legends</div>
       <div class="card-title">Titanfall 2 → APEX</div>
-      <div class="card-desc">TF2 uses MDL (v53), closest format relative to Apex's RMDL (v54). Single rmdlconv pass. Animations are already in RSEQ format — direct port with R5-AnimConv. Shorter pipeline than TF1.</div>
+      <div class="card-desc">TF2 uses MDL (v53), closest format relative to Apex's RMDL (v54). Single rmdlconv pass. TF2 shares the same material system as Apex so textures can be ported natively. Animations are compatible with R5-AnimConv directly — no Crowbar decompile step needed.</div>
       <div class="tag-list">
         <span class="tag active">.mdl</span><span class="tag active">.phy</span><span class="tag">rmdlconv</span><span class="tag">R5-AnimConv</span><span class="tag">RePak</span>
       </div>
@@ -557,11 +558,10 @@ zero_rmdl_guids(sys.argv[<span class="c-num">1</span>])</pre>
       </div>
 
       <div class="step-block fade-in" id="tf2-s4">
-        <div class="step-block-header"><div class="step-index">04</div><h3>TEXTURES &amp; VPK</h3></div>
+        <div class="step-block-header"><div class="step-index">04</div><h3>TEXTURES &amp; MATERIALS</h3></div>
         <div class="prose">
-          <p>TF2 textures are also VMT/VTF and can be used directly via VPK the same way as TF1. Extract the textures from the TF2 RPAK using Legion+, stage them in the correct folder structure, write a manifest, and build with revpk.</p>
-          <p>Follow the same VPK build process as the TF1 pipeline — the manifest format and revpk command are identical. See <a href="#tf1-s4" style="color:var(--accent)">Step 4 of the TF1 pipeline</a> for the full details.</p>
-          <div class="info-box note"><span class="info-label">GUID Patch still required</span>Even though TF2 is a single pass, the <code>.rmdl</code> output will still have texture GUIDs set. Zero them out the same way as TF1 (see TF1 Step 5) if you're using VMT textures.</div>
+          <p>TF2 uses the same material system as Apex — so TF2 textures and materials can be ported directly without the VMT fallback workaround needed for TF1. You can either port the native TF2 materials properly, or still use the VMT path if you prefer the quicker route.</p>
+          <p>If going the native route, extract textures from the TF2 RPAK using Legion+ and reference them in your RePak JSON directly. If using VMTs, follow the same VPK build process as the TF1 pipeline and zero the RMDL texture GUIDs — see <a href="#tf1-s4" style="color:var(--accent)">TF1 Step 4</a> and <a href="#tf1-s5" style="color:var(--accent)">TF1 Step 5</a>.</p>
         </div>
       </div>
 
