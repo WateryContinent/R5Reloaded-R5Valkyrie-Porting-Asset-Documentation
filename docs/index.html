@@ -7,6 +7,7 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=Share+Tech+Mono&family=Bebas+Neue&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
 <link rel="icon" type="image/png" href="/R5Reloaded-R5Valkyrie-Porting-Asset-Documentation/images/icon.png">
+<link rel="stylesheet" href="styles.css">
 <style>
   :root {
     --bg: #050810;
@@ -147,6 +148,9 @@
 </style>
 </head>
 <body>
+    <div class="warning-banner">
+  <b>WARNING: THIS WEBSITE / DOCUMENTATION IS INCOMPLETE AND MAY/WILL BE INCORRECT.</b>
+</div>
 <div class="grid-bg"></div>
 
 <nav>
@@ -525,7 +529,7 @@ zero_rmdl_guids(sys.argv[<span class="c-num">1</span>])</pre>
       <div class="step-block fade-in" id="tf2-s1">
         <div class="step-block-header"><div class="step-index">01</div><h3>EXTRACT FROM TF2</h3></div>
         <div class="prose">
-          <p>TF2 model assets are stored in RPAK files. Use <strong>Legion+</strong> or <strong>RSX</strong> to extract RMDLs and related files from the TF2 RPAK archives. TF2 RPAKs are located at <code>Titanfall2/r2/paks/Win64/</code>.</p>
+          <p>TF2 model assets are stored in RPAK files. Use <strong>RSX</strong> to extract RMDLs and related files from the TF2 RPAK archives. TF2 RPAKs are located at <code>Titanfall2/r2/paks/Win64/</code>.</p>
           <p>Unlike TF1, TF2 models are already in RMDL format — so there are no <code>.vvd</code>/<code>.vtx</code>/<code>.vvc</code> files. You just need the <code>.mdl</code> (and <code>.phy</code> for world models).</p>
           <div class="info-box tip"><span class="info-label">Tip</span>TF2 is the best source for Apex porting. Skeletons, animation conventions, and material paths are closely aligned with Apex — you're upgrading the container format, not rebuilding the content.</div>
         </div>
@@ -561,7 +565,7 @@ zero_rmdl_guids(sys.argv[<span class="c-num">1</span>])</pre>
         <div class="step-block-header"><div class="step-index">04</div><h3>TEXTURES &amp; MATERIALS</h3></div>
         <div class="prose">
           <p>TF2 uses the same material system as Apex — so TF2 textures and materials can be ported directly without the VMT fallback workaround needed for TF1. You can either port the native TF2 materials properly, or still use the VMT path if you prefer the quicker route.</p>
-          <p>If going the native route, extract textures from the TF2 RPAK using Legion+ and reference them in your RePak JSON directly. If using VMTs, follow the same VPK build process as the TF1 pipeline and zero the RMDL texture GUIDs — see <a href="#tf1-s4" style="color:var(--accent)">TF1 Step 4</a> and <a href="#tf1-s5" style="color:var(--accent)">TF1 Step 5</a>.</p>
+          <p>If going the native route, extract textures from the TF2 RPAK using RSX and reference them in your RePak JSON directly. If using VMTs, follow the same VPK build process as the TF1 pipeline and zero the RMDL texture GUIDs — see <a href="#tf1-s4" style="color:var(--accent)">TF1 Step 4</a> and <a href="#tf1-s5" style="color:var(--accent)">TF1 Step 5</a>.</p>
         </div>
       </div>
 
@@ -784,9 +788,9 @@ $sequence idle "mymodel_idle.smd" fps 30</pre>
     </div>
     <div class="tool-card">
       <span class="tool-icon">🔍</span>
-      <div class="tool-name">Legion+ / RSX</div>
-      <div class="tool-purpose">Asset extractors for TF2 and Apex RPAK files. Legion+ is the recommended GUI tool. RSX is a cross-platform CLI alternative with ZSTD support. Use either to extract RMDLs, textures, and animations from TF2 RPAKs.</div>
-      <a href="https://github.com/r-ex/LegionPlus" class="tool-link" target="_blank">github.com/r-ex/LegionPlus →</a>
+      <div class="tool-name">RSX</div>
+      <div class="tool-purpose">Asset extractor for TF2 and Apex RPAK files. RSX is a GUI Asset Extractor with ZSTD support. Use RSX to extract RMDLs (Apex Only), textures, and animations (Apex Only) from TF2 RPAKs.</div>
+      <a href="https://github.com/r-ex/rsx" class="tool-link" target="_blank">github.com/r-ex/rsx →</a>
     </div>
     <div class="tool-card">
       <span class="tool-icon">🎨</span>
@@ -852,7 +856,6 @@ $sequence idle "mymodel_idle.smd" fps 30</pre>
     <a href="https://github.com/r-ex/rmdlconv" target="_blank">rmdlconv</a>
     <a href="https://github.com/r-ex/RePak" target="_blank">RePak</a>
     <a href="https://github.com/r-ex/revpk" target="_blank">revpk</a>
-    <a href="https://github.com/r-ex/LegionPlus" target="_blank">Legion+</a>
     <a href="https://github.com/ZeqMacaw/Crowbar" target="_blank">Crowbar</a>
   </div>
 </footer>

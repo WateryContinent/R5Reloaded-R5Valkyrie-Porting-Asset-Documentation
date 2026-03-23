@@ -1,0 +1,65 @@
+/* =========================
+   GLOBAL / THEME
+========================= */
+:root {
+  --bg: #050810;
+  --surface: #0a0f1e;
+  --surface2: #0e1628;
+  --accent: #00e5ff;
+  --accent2: #ff6b35;
+  --accent3: #7c3aed;
+  --text: #c8d8f0;
+  --text-dim: #5a6a8a;
+  --text-bright: #eaf2ff;
+  --border: #1a2540;
+  --glow: 0 0 20px rgba(0,229,255,0.15);
+  --glow-strong: 0 0 40px rgba(0,229,255,0.3);
+}
+
+body {
+  background: var(--bg);
+  color: var(--text);
+  font-family: 'DM Sans', sans-serif;
+  margin: 0;
+}
+
+/* =========================
+   WARNING BANNER
+========================= */
+.warning-banner {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  z-index: 1000;
+
+  background: #ff2d2d;
+  color: white;
+
+  font-family: 'Share Tech Mono', monospace;
+  font-size: 11px;
+  letter-spacing: 1px;
+  text-transform: uppercase;
+
+  text-align: center;
+  padding: 10px 20px;
+
+  box-shadow: 0 0 20px rgba(255, 0, 0, 0.4);
+  animation: pulseRed 2s infinite;
+}
+
+@keyframes pulseRed {
+  0%, 100% { box-shadow: 0 0 10px rgba(255,0,0,0.4); }
+  50% { box-shadow: 0 0 25px rgba(255,0,0,0.8); }
+}
+
+/* =========================
+   NAVBAR FIX (push down)
+========================= */
+nav {
+  position: fixed;
+  top: 40px; /* pushes it below banner */
+  left: 0;
+  right: 0;
+  z-index: 100;
+}
